@@ -102,7 +102,7 @@ public class WordItem
 		sb.Append(_translation);
 		sb.Append(" | ");
 		sb.Append("[" + _transkription + "]");
-		sb.Append(" | R=");
+		sb.Append(" | R:");
 		sb.Append(Ratio);
 		sb.Append(" | Viewed:");
 		sb.Append(Viewed);
