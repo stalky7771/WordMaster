@@ -1,0 +1,594 @@
+{
+    "version": 0,
+    "name": "",
+    "words": [
+        {
+            "word": "a few",
+            "translation": "­ҐбЄ®«мЄ®",
+            "transkription": "? fju? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "about",
+            "translation": "®, ®Є®«® (® ўаҐ¬Ґ­Ё)",
+            "transkription": "??ba?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "across the street",
+            "translation": "зҐаҐ§ г«Ёжг",
+            "transkription": "??kr?s ?? stri?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "all the other",
+            "translation": "ўбҐ ®бв «м­лҐ",
+            "transkription": "??l ?i ???? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "all the time",
+            "translation": "ўбҐ ўаҐ¬п",
+            "transkription": "??l ?? ta?m ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "allergic to",
+            "translation": "бЄ«®­­л© Є  «ҐаЈЁЁ",
+            "transkription": "??l????k tu? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "almost",
+            "translation": "Ї®звЁ",
+            "transkription": "???lm??st ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "along",
+            "translation": "ў¤®«м",
+            "transkription": "??l?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "an hour and a half",
+            "translation": "Ї®«в®а  з б ",
+            "transkription": "?n ?a??r ?nd ? h??f ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "any more",
+            "translation": "Ў®«миҐ ­Ґ",
+            "transkription": "??ni m?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "at least",
+            "translation": "Ї® Єа ©­Ґ© ¬ҐаҐ",
+            "transkription": "?t li?st ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "aunt",
+            "translation": "вҐвп",
+            "transkription": "??nt ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "away",
+            "translation": "Їа®зм",
+            "transkription": "??we? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "backache",
+            "translation": "Ў®«м ў бЇЁ­Ґ",
+            "transkription": "?b?ke?k ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "block",
+            "translation": "Єў ав «",
+            "transkription": "bl?k ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "bus ride",
+            "translation": " ўв®Ўгб­ п нЄбЄгабЁп, Ї®Ґ§¤Є ",
+            "transkription": "b?s ra?d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "by then",
+            "translation": "Є в®¬г ўаҐ¬Ґ­Ё",
+            "transkription": "ba? ??n ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "candy",
+            "translation": "Є®­дҐв , Є®­дҐвл",
+            "transkription": "?k?ndi ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "church",
+            "translation": "жҐаЄ®ўм",
+            "transkription": "???? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "cold",
+            "translation": "Їа®бвг¤ ",
+            "transkription": "k??ld ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "completely",
+            "translation": "Ї®«­®бвмо, ®Є®­з вҐ«м­®",
+            "transkription": "k?m?pli?tli ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "corner",
+            "translation": "гЈ®«",
+            "transkription": "?k??n? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "direction",
+            "translation": "­ Їа ў«Ґ­ЁҐ",
+            "transkription": "d??r?k??n ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "directions",
+            "translation": "Ё­бвагЄжЁЁ, гЄ § ­Ёп",
+            "transkription": "d??r?k??nz ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "earthquake",
+            "translation": "§Ґ¬«ҐвапбҐ­ЁҐ",
+            "transkription": "????kwe?k ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "famous",
+            "translation": "§­ ¬Ґ­Ёвл©",
+            "transkription": "?fe?m?s ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "far",
+            "translation": "¤ «ҐЄ®",
+            "transkription": "f?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "far away",
+            "translation": "¤ «ҐЄ® ®вбо¤ ",
+            "transkription": "f??r ??we? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "front door",
+            "translation": "Ј« ў­л© ўе®¤",
+            "transkription": "fr?nt d?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "half an hour",
+            "translation": "Ї®«з б ",
+            "transkription": "h??f ?n ?a?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "hundreed",
+            "translation": "б®в­п, бв®",
+            "transkription": "hundreed ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "in front of",
+            "translation": "ЇҐаҐ¤ зҐ¬-«ЁЎ®, ўЇҐаҐ¤Ё",
+            "transkription": "?n fr?nt ?v ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "instead of",
+            "translation": "ў¬Ґбв® (зҐЈ®-«ЁЎ®)",
+            "transkription": "?n?st?d ?v ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "interview",
+            "translation": "Ё­вҐаўмо",
+            "transkription": "??nt?vju? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "mail",
+            "translation": "Ї®зв ",
+            "transkription": "me?l ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "mall",
+            "translation": "ап¤ ¬ Ј §Ё­®ў ў ®¤­®¬ §¤ ­ЁЁ",
+            "transkription": "m??l ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "midnight",
+            "translation": "Ї®«­®зм",
+            "transkription": "?m?dna?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "museum",
+            "translation": "¬г§Ґ©",
+            "transkription": "mju(?)?z??m ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "near",
+            "translation": "ап¤®¬",
+            "transkription": "n?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "near here",
+            "translation": "­Ґ¤ «ҐЄ® ®вбо¤ ",
+            "transkription": "n?? h?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "out of town",
+            "translation": "§  Ј®а®¤®¬",
+            "transkription": "a?t ?v ta?n ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "penicillin",
+            "translation": "ЇҐ­ЁжЁ««Ё­",
+            "transkription": "?p?n??s?l?n ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "pill",
+            "translation": "в Ў«ҐвЄ , ЇЁ«о«п",
+            "transkription": "p?l ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "pyramids",
+            "translation": "ЇЁа ¬Ё¤л",
+            "transkription": "?p?r?m?dz ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "right",
+            "translation": "Їа ўл©, Їа ўЁ«м­л©",
+            "transkription": "ra?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "right after",
+            "translation": "ба §г Ї®б«Ґ",
+            "transkription": "ra?t ???ft? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "road",
+            "translation": "¤®а®Ј ",
+            "transkription": "r??d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "several",
+            "translation": "­ҐбЄ®«мЄ®",
+            "transkription": "?s?vr?l ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "square",
+            "translation": "Ї«®й ¤м",
+            "transkription": "skwe? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "stupid",
+            "translation": "Ј«гЇл©",
+            "transkription": "?stju?p?d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "such",
+            "translation": "в Є®©, в ЄЁҐ",
+            "transkription": "s?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "that's what I thought",
+            "translation": "п Ё¬Ґ­­® в Є Ё ¤г¬ «",
+            "transkription": "??ts w?t a? ???t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "thousand",
+            "translation": "влбпз ",
+            "transkription": "??a?z?nd ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "time",
+            "translation": "ўаҐ¬п, а §",
+            "transkription": "ta?m ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to arrive",
+            "translation": "ЇаЁЎлў вм",
+            "transkription": "tu? ??ra?v ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to believe",
+            "translation": "ўҐаЁвм",
+            "transkription": "tu? b??li?v ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to dress",
+            "translation": "®¤Ґў вмбп",
+            "transkription": "tu? dr?s ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to follow",
+            "translation": "б«Ґ¤®ў вм, Ё¤вЁ § ",
+            "transkription": "tu? ?f?l?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to get",
+            "translation": "¤®ЎЁа вмбп",
+            "transkription": "tu? g?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to get lost",
+            "translation": "Ї®вҐапвмбп",
+            "transkription": "tu? g?t l?st ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to get off",
+            "translation": "б®©вЁ, ўл©вЁ (Ё§ ва ­бЇ®ав )",
+            "transkription": "tu? g?t ?f ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to go abroad",
+            "translation": "Ґе вм §  Ја ­Ёжг",
+            "transkription": "tu? g?? ??br??d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to hire",
+            "translation": "­ ­Ё¬ вм, Ўа вм ­  а Ў®вг",
+            "transkription": "tu? ?ha?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to last",
+            "translation": "¤«Ёвмбп, Їа®¤®«¦ вмбп",
+            "transkription": "tu? l??st ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to leave",
+            "translation": "®бв ў«пвм, Ї®ЄЁ¤ вм",
+            "transkription": "tu? li?v ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to lock",
+            "translation": "§ Єалў вм ­  Є«оз",
+            "transkription": "tu? l?k ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to make a mistake",
+            "translation": "¤®ЇгбЄ вм ®иЁЎЄг",
+            "transkription": "tu? me?k ? m?s?te?k ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to paint",
+            "translation": "Єа бЁвм",
+            "transkription": "tu? pe?nt ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to practice",
+            "translation": "Їа ЄвЁЄ®ў вм, Ё¬Ґвм Їа ЄвЁЄг",
+            "transkription": "tu? ?pr?kt?s ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to prepare",
+            "translation": "ЇаЁЈ®в®ўЁвм",
+            "transkription": "tu? pr??pe? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to reach",
+            "translation": "¤®бвЁЈ вм",
+            "transkription": "tu? ri?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to ride",
+            "translation": "Ґе вм",
+            "transkription": "tu? ra?d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to stay",
+            "translation": "®бв ў вмбп",
+            "transkription": "tu? ste? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to take the bus",
+            "translation": "бҐбвм ў  ўв®Ўгб",
+            "transkription": "tu? te?k ?? b?s ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to turn",
+            "translation": "Ї®ўҐа­гвм",
+            "transkription": "tu? t??n ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to wait for",
+            "translation": "¦¤ вм (Є®Ј®-«ЁЎ®, зҐЈ®-«ЁЎ®)",
+            "transkription": "tu? we?t f?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "to wake up",
+            "translation": "Ўг¤Ёвм, Їа®блЇ вмбп",
+            "transkription": "tu? we?k ?p ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "tour guide",
+            "translation": "нЄбЄгаб®ў®¤",
+            "transkription": "t?? ga?d ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "twice",
+            "translation": "¤ў ¦¤л",
+            "transkription": "twa?s ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "until",
+            "translation": "¤®, ¤® вҐе Ї®а",
+            "transkription": "?n?t?l ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "upset",
+            "translation": "а ббва®Ґ­­л©",
+            "transkription": "?p?s?t ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "waiter",
+            "translation": "®дЁжЁ ­в",
+            "transkription": "?we?t? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "wrong",
+            "translation": "­ҐЇа ўЁ«м­л©, ­ҐўҐа­л©",
+            "transkription": "r?? ",
+            "correctCount": 0,
+            "wrongCount": 0
+        },
+        {
+            "word": "after that",
+            "translation": "Ї®б«Ґ в®Ј®",
+            "transkription": "???ft? ??t",
+            "correctCount": 0,
+            "wrongCount": 0
+        }
+    ]
+}
