@@ -1,6 +1,11 @@
-﻿public class BaseManager
+﻿public abstract class BaseManager
 {
-	public virtual void Init()
+	public virtual void InitAwake()
+	{
+
+	}
+
+	public virtual void InitStart()
 	{
 
 	}

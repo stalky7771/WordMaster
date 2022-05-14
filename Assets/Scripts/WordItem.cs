@@ -104,7 +104,7 @@ public class WordItem
 		sb.Append("[" + _transkription + "]");
 		sb.Append(" | R:");
 		sb.Append(Ratio);
-		sb.Append(" | Viewed:");
+		sb.Append(" | V:");
 		sb.Append(Viewed);
 		return sb.ToString();
 	}

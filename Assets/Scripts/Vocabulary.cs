@@ -54,7 +54,7 @@ public class Vocabulary
 
 	public bool IsEmpty => _words.Count == 0;
 
-	public void LoadFromCSV(string path)
+	/*public void LoadFromCSV(string path)
 	{
 		_words.Clear();
 
@@ -71,7 +71,7 @@ public class Vocabulary
 			string[] wordRecord = line.Split(';');
 			_words.Add(new WordItem(wordRecord));
 		}
-	}
+	}*/
 
 	public void SaveToJson(string path)
 	{
@@ -112,5 +112,10 @@ public class Vocabulary
 		}
 
 		return sb.ToString().ToMonoSpace();
+	}
+
+	public void DeleteWord(WordItem word)
+	{
+		_words.Remove(word);
 	}
 }

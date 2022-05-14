@@ -6,16 +6,19 @@ public class Options : MonoBehaviour
 	private const string SHOW_WORD_LENGTH = "ShowWordLength";
 	private const string SHOW_FIRST_LETTER = "ShowFirstLetter";
 	private const string SHOW_TRANSLATE_AFTER_WRONG_TRY = "ShowTranslateAfterWrongTry";
+	private const string IS_REVERSED = "IsReversed";
 
 	[SerializeField] private Toggle _toggleShowWordLength;
 	[SerializeField] private Toggle _toggleShowFirstLetter;
 	[SerializeField] private Toggle _toggleShowTranslateAfterWrongTry;
+	[SerializeField] private Toggle _toggleIsReversed;
 
 	private void Awake()
 	{
 		_toggleShowWordLength.isOn = ShowWordLength;
 		_toggleShowFirstLetter.isOn = ShowFirstLetter;
 		_toggleShowTranslateAfterWrongTry.isOn = ShowTranslateAfterWrongTry;
+		_toggleIsReversed.isOn = IsReversed;
 	}
 
 	public static bool ShowWordLength
@@ -36,6 +39,12 @@ public class Options : MonoBehaviour
 		set => SetBool(SHOW_TRANSLATE_AFTER_WRONG_TRY, value);
 	}
 
+	public static bool IsReversed
+	{
+		get => GetBool(IS_REVERSED);
+		set => SetBool(IS_REVERSED, value);
+	}
+
 	private static bool GetBool(string key)
 	{
 		return PlayerPrefs.GetInt(key, 0) != 0;
@@ -43,7 +52,6 @@ public class Options : MonoBehaviour
 
 	private static void SetBool(string key, bool val)
 	{
-		//Debug.Log(">>> " + key + " = " + val);
 		PlayerPrefs.SetInt(key, val ? 1 : 0);
 	}
 
@@ -60,5 +68,10 @@ public class Options : MonoBehaviour
 	public void OnToggleTranslateAfterWrongTry(bool val)
 	{
 		ShowTranslateAfterWrongTry = val;
+	}
+
+	public void OnToggleIsReversed(bool val)
+	{
+		IsReversed = val;
 	}
 }
