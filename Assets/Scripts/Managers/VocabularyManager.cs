@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VocabularyManager : BaseManager
 {
-	private string PATH_CSV = @"C:\_DATA\_Projects\WordMaster\Assets\Dicts\Dictionary.csv";
+	//private string PATH_CSV = @"C:\_DATA\_Projects\WordMaster\Assets\Dicts\Dictionary.csv";
 
 	public event Action OnUpdateUi;
 	public event Action<WordItem> OnSetNewWord;
@@ -15,7 +15,9 @@ public class VocabularyManager : BaseManager
 	public Vocabulary Vocabulary => _vocabulary;
 
 	public string Masked { get; private set; }
-	public string PathJson => Application.persistentDataPath + "/dictionary.json";
+	public string PathJson => Application.persistentDataPath + "/dictionary.voc";
+
+	private string _lastEnteredText;
 
 	private WordItem _currentWord;
 	public WordItem CurrentWord
@@ -33,15 +35,16 @@ public class VocabularyManager : BaseManager
 	public override void InitStart()
 	{
 		LoadFromJson();
-		CurrentWord = Vocabulary.NextWord;
-		OnSetNewWord?.Invoke(CurrentWord);
-	}
 
-	public void SetDefaultVacabulary()
-	{
-		_vocabulary.SetDefaultData();
+		if (_vocabulary.IsEmpty)
+		{
+			_vocabulary.SetDefaultData();
+		}
 		CurrentWord = Vocabulary.NextWord;
+		ProcessWord(string.Empty);
 		OnSetNewWord?.Invoke(CurrentWord);
+
+		Context.Options.OnUpdate += Update;
 	}
 
 	/*public void LoadFromCSV()
@@ -62,9 +65,16 @@ public class VocabularyManager : BaseManager
 		_vocabulary.LoadFromJson(PathJson);
 	}
 
+	public void Update()
+	{
+		ProcessWord(_lastEnteredText);
+	}
+
 	public void ProcessWord(string text)
 	{
-		bool isReversed = Options.IsReversed;
+		bool isReversed = Context.Options.IsReversed;
+
+		_lastEnteredText = text;
 
 		if (CurrentWord.IsCorrectTranslation(text, isReversed))
 		{
@@ -82,8 +92,11 @@ public class VocabularyManager : BaseManager
 		}
 		else
 		{
-			string phrase = CurrentWord.GetWord(isReversed);
-			Masked = phrase.SetColor("red");
+			string phrase = CurrentWord.Word;
+			Masked = Context.Options.ShowCorrectWord
+				? phrase.SetColor("red")
+				: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
+
 			CurrentWord.AnswerWrong();
 			
 		}

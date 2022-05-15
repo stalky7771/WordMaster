@@ -7,12 +7,6 @@ public class TestButtonsView : MonoBehaviour
 		Debug.Log(">>> OnClickTest");
 	}
 
-	public void OnClickDefaultDictionary()
-	{
-		//Debug.Log(">>> OnClickDefaultDictionary");
-		Context.VocabularyManager.SetDefaultVacabulary();
-	}
-
 	public void OnClickLoadFromCSV()
 	{
 		Debug.Log(">>> OnClickLoadFromCSV");

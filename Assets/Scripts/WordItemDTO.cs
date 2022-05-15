@@ -16,8 +16,8 @@ public class WordItemDTO
 
 	public WordItemDTO(WordItem wordItem)
 	{
-		word = wordItem.GetWord();
-		translation = wordItem.GetTranslation();
+		word = wordItem.WordForDto;
+		translation = wordItem.TranslationForDto;
 		transkription = wordItem.Transcription;
 		ratio = wordItem.Ratio;
 		viewed = wordItem.Viewed;

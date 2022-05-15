@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Version : MonoBehaviour
+public class VersionView : MonoBehaviour
 {
 	private bool _isInit;
 

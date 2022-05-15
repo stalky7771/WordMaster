@@ -9,7 +9,12 @@ public class WordItem
 	private int _ratio;
 	private int _viewed;
 
+	public string Word => Context.Options.IsReversed ? _translation : _word;
+	public string Translation => Context.Options.IsReversed ? _word : _translation;
 	public string Transcription => _transkription;
+
+	public string WordForDto => _word;
+	public string TranslationForDto => _translation;
 
 	public int Ratio
 	{
@@ -51,16 +56,6 @@ public class WordItem
 		_transkription = dto.transkription;
 		_ratio = dto.ratio;
 		_viewed = dto.viewed;
-	}
-
-	public string GetWord(bool isReversed = false)
-	{
-		return isReversed ? _translation : _word;
-	}
-
-	public string GetTranslation(bool isReversed = false)
-	{
-		return isReversed ? _word : _translation;
 	}
 
 	private string GetString(string[] data, int index)
@@ -138,12 +133,12 @@ public class WordItem
 
 		string result = string.Empty;
 
-		if (Options.ShowWordLength == false)
+		if (Context.Options.ShowWordLength == false)
 		{
 			return result;
 		}
 
-		if (Options.ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
+		if (Context.Options.ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
 		{
 			textForCheck = _translation.Substring(0, 1);
 		}

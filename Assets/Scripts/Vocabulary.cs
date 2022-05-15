@@ -108,7 +108,7 @@ public class Vocabulary
 		foreach (var w in _words)
 		{
 			string transcription = "[" + w.Transcription + "]";
-			sb.Append($"{w.GetWord(),-12} {w.GetTranslation(),-12} {w.Ratio,-3} {transcription,-12}\n");
+			sb.Append($"{w.Word,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
 		}
 
 		return sb.ToString().ToMonoSpace();

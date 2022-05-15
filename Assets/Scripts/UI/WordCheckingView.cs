@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WordChecking : MonoBehaviour
+public class WordCheckingView : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI _textTranslation;
 	[SerializeField] private TextMeshProUGUI _textMasked;
@@ -64,14 +64,14 @@ public class WordChecking : MonoBehaviour
 
 	private void OnUpdateUI()
 	{
-		Translation = Context.VocabularyManager.CurrentWord.GetTranslation(Options.IsReversed);
+		Translation = Context.VocabularyManager.CurrentWord.Translation;
 		Masked = Context.VocabularyManager.Masked;
 	}
 
 	private void OnSetNewWord(WordItem word)
 	{
 		_inputField.text = string.Empty;
-		Translation = word.GetTranslation(Options.IsReversed);
+		Translation = word.Translation;
 		Masked = Context.VocabularyManager.Masked;
 	}
 
