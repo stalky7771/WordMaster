@@ -1,12 +1,15 @@
-﻿public abstract class BaseManager
+﻿namespace WordMaster
 {
-	public virtual void InitAwake()
+	public abstract class BaseManager
 	{
+		public virtual void InitAwake()
+		{
 
-	}
+		}
 
-	public virtual void InitStart()
-	{
+		public virtual void InitStart()
+		{
 
+		}
 	}
 }

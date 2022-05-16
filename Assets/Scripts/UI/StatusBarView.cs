@@ -1,6 +1,6 @@
-using System;
 using TMPro;
 using UnityEngine;
+using WordMaster;
 
 public class StatusBarView : MonoBehaviour
 {

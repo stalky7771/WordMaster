@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using WordMaster;
 
 public class WordCheckingView : MonoBehaviour
 {
