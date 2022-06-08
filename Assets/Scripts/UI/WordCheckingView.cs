@@ -76,7 +76,7 @@ public class WordCheckingView : MonoBehaviour
 		Masked = Context.VocabularyManager.Masked;
 	}
 
-	private void OnPrintVocabulary(Vocabulary vocabulary)
+	private void OnPrintVocabulary(Dictionary vocabulary)
 	{
 		//_textConsole.text = vocabulary.ToString();
 	}

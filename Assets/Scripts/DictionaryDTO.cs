@@ -4,18 +4,18 @@ using System.Collections.Generic;
 namespace WordMaster
 {
 	[Serializable]
-	public class VocabularyDTO
+	public class DictionaryDTO
 	{
 		public int version;
 		public string name;
 		public List<WordItemDTO> words;
 
-		public VocabularyDTO()
+		public DictionaryDTO()
 		{
 
 		}
 
-		public VocabularyDTO(Vocabulary vocabulary)
+		public DictionaryDTO(Dictionary vocabulary)
 		{
 			version = vocabulary.Version;
 			name    = vocabulary.Name;

@@ -9,9 +9,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-/[Aa]ssets/Tools/DictionaryEditor/.vs/
-/[Aa]ssets/Tools/DictionaryEditor/bin/Debug/
-/[Aa]ssets/Tools/DictionaryEditor/obj/
+/[Tt]ools/DictionaryEditor/.vs/
+/[Tt]ools/DictionaryEditor/bin/Debug/
+/[Tt]ools/DictionaryEditor/obj/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -64,8 +64,6 @@ crashlytics-build.properties
 
 default-2021.dwlt
 
-!/[Aa]ssets/Tools/DictionaryEditor/*.sln
-!/[Aa]ssets/Tools/DictionaryEditor/*.csproj
-
-     
+!/[Tt]ools/DictionaryEditor/*.sln
+!/[Tt]ools/DictionaryEditor/*.csproj    
 

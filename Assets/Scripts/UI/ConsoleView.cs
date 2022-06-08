@@ -11,7 +11,7 @@ public class ConsoleView : MonoBehaviour
 	    Context.VocabularyManager.OnPrintVocabulary += OnPrintVocabulary;
 	}
 
-	private void OnPrintVocabulary(Vocabulary vocabulary)
+	private void OnPrintVocabulary(Dictionary vocabulary)
 	{
 		_text.text = vocabulary.ToString();
 	}

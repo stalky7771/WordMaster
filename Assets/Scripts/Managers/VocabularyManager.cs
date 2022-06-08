@@ -11,10 +11,10 @@ namespace WordMaster
 		public event Action OnUpdateUi;
 		public event Action<WordItem> OnSetNewWord;
 		public event Action<WordItem> OnWordFinished;
-		public event Action<Vocabulary> OnPrintVocabulary;
+		public event Action<Dictionary> OnPrintVocabulary;
 
-		private Vocabulary _vocabulary;
-		public Vocabulary Vocabulary => _vocabulary;
+		private Dictionary _vocabulary;
+		public Dictionary Vocabulary => _vocabulary;
 
 		public string Masked { get; private set; }
 		public string PathJson => Application.persistentDataPath + "/dictionary.voc";
@@ -30,7 +30,7 @@ namespace WordMaster
 
 		public override void InitAwake()
 		{
-			_vocabulary = new Vocabulary();
+			_vocabulary = new Dictionary();
 			base.InitAwake();
 		}
 
@@ -58,7 +58,7 @@ namespace WordMaster
 		{
 			//_vocabulary.SetDefaultData();
 
-			string json = JsonUtility.ToJson(new VocabularyDTO(_vocabulary), true);
+			string json = JsonUtility.ToJson(new DictionaryDTO(_vocabulary), true);
 			File.WriteAllText(PathJson, json);
 		}
 

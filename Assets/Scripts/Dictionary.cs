@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
 namespace WordMaster
 {
 	[Serializable]
-	public class Vocabulary
+	public class Dictionary
 	{
 		[SerializeField] private int _version;
 		[SerializeField] private string _name;
@@ -21,7 +20,7 @@ namespace WordMaster
 		public List<WordItem> Words => _words;
 		public string Path => _path;
 
-		public Vocabulary()
+		public Dictionary()
 		{
 
 		}
@@ -77,7 +76,7 @@ namespace WordMaster
 
 		public void SaveToJson(string path)
 		{
-			string json = JsonUtility.ToJson(new VocabularyDTO(this), true);
+			string json = JsonUtility.ToJson(new DictionaryDTO(this), true);
 
 			using (StreamWriter outputFile = new StreamWriter(path))
 			{
@@ -91,7 +90,7 @@ namespace WordMaster
 				return;
 
 			string fileContents = File.ReadAllText(path);
-			VocabularyDTO dto = JsonUtility.FromJson<VocabularyDTO>(fileContents);
+			DictionaryDTO dto = JsonUtility.FromJson<DictionaryDTO>(fileContents);
 
 			_version = dto.version;
 			_name = dto.name;
