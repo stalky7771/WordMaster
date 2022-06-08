@@ -11,8 +11,8 @@ namespace WordMaster
 		private int _ratio;
 		private int _viewed;
 
-		public string Word => Context.Options.IsReversed ? _translation : _word;
-		public string Translation => Context.Options.IsReversed ? _word : _translation;
+		public string Word => IsReversed ? _translation : _word;
+		public string Translation => IsReversed ? _word : _translation;
 		public string Transcription => _transkription;
 
 		public string WordForDto => _word;
@@ -22,6 +22,24 @@ namespace WordMaster
 		{
 			get => _ratio;
 			set => _ratio = Mathf.Clamp(value, -5, 5);
+		}
+
+		public static bool IsReversed
+		{
+			get;
+			set;
+		}
+
+		public static bool ShowWordLength
+		{
+			get;
+			set;
+		}
+
+		public static bool ShowFirstLetter
+		{
+			get;
+			set;
 		}
 
 		public int Viewed
@@ -135,12 +153,12 @@ namespace WordMaster
 
 			string result = string.Empty;
 
-			if (Context.Options.ShowWordLength == false)
+			if (ShowWordLength == false)
 			{
 				return result;
 			}
 
-			if (Context.Options.ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
+			if (ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
 			{
 				textForCheck = _translation.Substring(0, 1);
 			}

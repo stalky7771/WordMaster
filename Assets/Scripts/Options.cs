@@ -12,11 +12,19 @@ namespace WordMaster
 
 		public event Action OnUpdate;
 
+		public Options()
+		{
+			WordItem.IsReversed = IsReversed;
+			WordItem.ShowWordLength = ShowWordLength;
+			WordItem.ShowFirstLetter = ShowFirstLetter;
+		}
+
 		public bool ShowWordLength
 		{
 			get => GetBool(SHOW_WORD_LENGTH);
 			set
 			{
+				WordItem.ShowWordLength = value;
 				SetBool(SHOW_WORD_LENGTH, value);
 				OnUpdate?.Invoke();
 			}
@@ -28,6 +36,7 @@ namespace WordMaster
 			get => GetBool(SHOW_FIRST_LETTER);
 			set
 			{
+				WordItem.ShowFirstLetter = value;
 				SetBool(SHOW_FIRST_LETTER, value);
 				OnUpdate?.Invoke();
 			}
@@ -48,6 +57,7 @@ namespace WordMaster
 			get => GetBool(IS_REVERSED);
 			set
 			{
+				WordItem.IsReversed = value;
 				SetBool(IS_REVERSED, value);
 				OnUpdate?.Invoke();
 			}
