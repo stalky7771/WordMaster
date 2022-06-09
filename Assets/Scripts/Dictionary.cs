@@ -25,6 +25,18 @@ namespace WordMaster
 
 		}
 
+		public Dictionary(DictionaryDTO dto)
+		{
+			_version = dto.version;
+			_name = dto.name;
+			_words = new List<WordItem>();
+
+			dto.words.ForEach(wordItemDto =>
+			{
+				_words.Add(new WordItem(wordItemDto));
+			});
+		}
+
 		public void SetDefaultData()
 		{
 			_words.Clear();
