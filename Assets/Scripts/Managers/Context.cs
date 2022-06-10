@@ -5,7 +5,7 @@ namespace WordMaster
 {
 	public class Context : MonoBehaviour
 	{
-		public static VocabularyManager VocabularyManager { get; private set; }
+		public static DictionaryManager DictionaryManager { get; private set; }
 		public static Options Options { get; private set; }
 
 		private static readonly List<BaseManager> _managers = new List<BaseManager>();
@@ -14,7 +14,7 @@ namespace WordMaster
 		{
 			Application.targetFrameRate = 45;
 			Options = new Options();
-			_managers.Add(VocabularyManager = new VocabularyManager());
+			_managers.Add(DictionaryManager = new DictionaryManager());
 		}
 
 		private void Awake()

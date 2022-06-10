@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WordMaster
 {
-	public class VocabularyManager : BaseManager
+	public class DictionaryManager : BaseManager
 	{
 		//private string PATH_CSV = @"C:\_DATA\_Projects\WordMaster\Assets\Dicts\Dictionary.csv";
 
@@ -17,7 +17,8 @@ namespace WordMaster
 		public Dictionary Vocabulary => _vocabulary;
 
 		public string Masked { get; private set; }
-		public string PathJson => Application.persistentDataPath + "/dictionary.voc";
+		//public string PathJson => Application.persistentDataPath + "/dictionary.voc";
+		public string PathJson => @"D:\DOWNLOAD\L15.dict";
 
 		private string _lastEnteredText;
 

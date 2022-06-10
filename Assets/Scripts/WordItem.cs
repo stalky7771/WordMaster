@@ -24,23 +24,9 @@ namespace WordMaster
 			set => _ratio = Mathf.Clamp(value, -5, 5);
 		}
 
-		public static bool IsReversed
-		{
-			get;
-			set;
-		}
-
-		public static bool ShowWordLength
-		{
-			get;
-			set;
-		}
-
-		public static bool ShowFirstLetter
-		{
-			get;
-			set;
-		}
+		public static bool IsReversed { get; set; }
+		public static bool ShowWordLength { get; set; }
+		public static bool ShowFirstLetter { get; set; }
 
 		public int Viewed
 		{
@@ -55,7 +41,7 @@ namespace WordMaster
 			EmptyWord = new WordItem("empty word", "empty translation", "empty transkription");
 		}
 
-		public WordItem(string word, string translation, string transkription)
+		public WordItem(string word, string translation, string transkription = "")
 		{
 			_word = word;
 			_translation = translation;
@@ -76,6 +62,13 @@ namespace WordMaster
 			_transkription = dto.transkription;
 			_ratio = dto.ratio;
 			_viewed = dto.viewed;
+		}
+
+		public void Update(WordItem other)
+		{
+			_word = other.Word;
+			_translation = other.Translation;
+			_transkription = other.Transcription;
 		}
 
 		private string GetString(string[] data, int index)

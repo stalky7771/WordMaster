@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace WordMaster
@@ -67,33 +68,10 @@ namespace WordMaster
 
 		public bool IsEmpty => _words.Count == 0;
 
-		/*public void LoadFromCSV(string path)
-		{
-			_words.Clear();
-
-			string allText = File.ReadAllText(path, Encoding.GetEncoding("windows-1251"));
-			string[] stringSeparators = new string[] { "\r\n" };
-			List<string> lines   = allText.Split(stringSeparators, StringSplitOptions.None).ToList();
-			lines.RemoveAll(s => s.Length < 3);
-
-			foreach (string line in lines)
-			{
-				if (line.Length < 5)
-					continue;
-
-				string[] wordRecord = line.Split(';');
-				_words.Add(new WordItem(wordRecord));
-			}
-		}*/
-
 		public void SaveToJson(string path)
 		{
-			string json = JsonUtility.ToJson(new DictionaryDTO(this), true);
-
-			using (StreamWriter outputFile = new StreamWriter(path))
-			{
-				outputFile.Write(json);
-			}
+			using var outputFile = new StreamWriter(path);
+			outputFile.Write(JsonHelper.Serialize(new DictionaryDTO(this)));
 		}
 
 		public void LoadFromJson(string path)
@@ -101,8 +79,8 @@ namespace WordMaster
 			if (File.Exists(path) == false)
 				return;
 
-			string fileContents = File.ReadAllText(path);
-			DictionaryDTO dto = JsonUtility.FromJson<DictionaryDTO>(fileContents);
+			string json = File.ReadAllText(path);
+			var dto = JsonHelper.Deserialize(json);
 
 			_version = dto.version;
 			_name = dto.name;
@@ -130,6 +108,25 @@ namespace WordMaster
 		public void DeleteWord(WordItem word)
 		{
 			_words.Remove(word);
+		}
+
+		public WordItem GetWordItem(int index)
+		{
+			if (index >= _words.Count)
+				return null;
+
+			return _words[index];
+		}
+
+		public void AddWord(WordItem word)
+		{
+			_words.Add(word);
+		}
+
+
+		public void RemoveWord(int index)
+		{
+			_words.RemoveAt(index);
 		}
 	}
 }

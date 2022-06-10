@@ -8,7 +8,7 @@ public class ConsoleView : MonoBehaviour
 
 	void Start()
     {
-	    Context.VocabularyManager.OnPrintVocabulary += OnPrintVocabulary;
+	    Context.DictionaryManager.OnPrintVocabulary += OnPrintVocabulary;
 	}
 
 	private void OnPrintVocabulary(Dictionary vocabulary)

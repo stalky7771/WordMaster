@@ -8,7 +8,7 @@ public class StatusBarView : MonoBehaviour
 
 	void Start()
 	{
-		Context.VocabularyManager.OnWordFinished += OnWordFinished;
+		Context.DictionaryManager.OnWordFinished += OnWordFinished;
 		_text.text = string.Empty;
 	}
 

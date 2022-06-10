@@ -23,9 +23,9 @@ public class WordCheckingView : MonoBehaviour
 
 	private void Start()
 	{
-		Context.VocabularyManager.OnUpdateUi += OnUpdateUI;
-		Context.VocabularyManager.OnSetNewWord += OnSetNewWord;
-		Context.VocabularyManager.OnPrintVocabulary += OnPrintVocabulary;
+		Context.DictionaryManager.OnUpdateUi += OnUpdateUI;
+		Context.DictionaryManager.OnSetNewWord += OnSetNewWord;
+		Context.DictionaryManager.OnPrintVocabulary += OnPrintVocabulary;
 	}
 
 	private void Update()
@@ -38,7 +38,7 @@ public class WordCheckingView : MonoBehaviour
 		if (Input.GetKeyDown("delete"))
 		{
 			Debug.Log(">>> delete key was pressed");
-			//Context.VocabularyManager.DeleteCurrentWord();
+			//Context.DictionaryManager.DeleteCurrentWord();
 		}
 
 		if (_inputField.isFocused)
@@ -54,7 +54,7 @@ public class WordCheckingView : MonoBehaviour
 	public void OnValueChanged()
 	{
 		//_inputManager.OnValueChanged();
-		Context.VocabularyManager.ProcessWord(_inputField.text);
+		Context.DictionaryManager.ProcessWord(_inputField.text);
 	}
 
 	/*IEnumerator MoveTextEnd_NextFrame()
@@ -65,15 +65,15 @@ public class WordCheckingView : MonoBehaviour
 
 	private void OnUpdateUI()
 	{
-		Translation = Context.VocabularyManager.CurrentWord.Translation;
-		Masked = Context.VocabularyManager.Masked;
+		Translation = Context.DictionaryManager.CurrentWord.Translation;
+		Masked = Context.DictionaryManager.Masked;
 	}
 
 	private void OnSetNewWord(WordItem word)
 	{
 		_inputField.text = string.Empty;
 		Translation = word.Translation;
-		Masked = Context.VocabularyManager.Masked;
+		Masked = Context.DictionaryManager.Masked;
 	}
 
 	private void OnPrintVocabulary(Dictionary vocabulary)
