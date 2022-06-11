@@ -15,13 +15,13 @@ namespace WordMaster
 
 		}
 
-		public DictionaryDTO(Dictionary vocabulary)
+		public DictionaryDTO(Dictionary dictionary)
 		{
-			version = vocabulary.Version;
-			name    = vocabulary.Name;
+			version = dictionary.Version;
+			name    = dictionary.Name;
 
 			words = new List<WordItemDTO>();
-			vocabulary.Words.ForEach(w => words.Add(new WordItemDTO(w)));
+			dictionary.Words.ForEach(w => words.Add(new WordItemDTO(w)));
 		}
 	}
 }

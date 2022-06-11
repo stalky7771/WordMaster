@@ -5,15 +5,17 @@ namespace WordMaster
 {
 	public class WordItem
 	{
+		public const int MIN_RATIO = -5;
+		public const int MAX_RATIO = 7;
 		private string _word;
 		private string _translation;
-		private string _transkription;
+		private string _transcription;
 		private int _ratio;
 		private int _viewed;
 
 		public string Word => IsReversed ? _translation : _word;
 		public string Translation => IsReversed ? _word : _translation;
-		public string Transcription => _transkription;
+		public string Transcription => _transcription;
 
 		public string WordForDto => _word;
 		public string TranslationForDto => _translation;
@@ -21,7 +23,7 @@ namespace WordMaster
 		public int Ratio
 		{
 			get => _ratio;
-			set => _ratio = Mathf.Clamp(value, -5, 5);
+			set => _ratio = Mathf.Clamp(value, MIN_RATIO, MAX_RATIO);
 		}
 
 		public static bool IsReversed { get; set; }
@@ -34,41 +36,34 @@ namespace WordMaster
 			private set => _viewed = value;
 		}
 
-		public static WordItem EmptyWord;
-
-		static WordItem()
-		{
-			EmptyWord = new WordItem("empty word", "empty translation", "empty transkription");
-		}
-
-		public WordItem(string word, string translation, string transkription = "")
+		public WordItem(string word, string translation, string transcription = "")
 		{
 			_word = word;
 			_translation = translation;
-			_transkription = transkription;
+			_transcription = transcription;
 		}
 
 		public WordItem(string[] data)
 		{
 			_word = GetString(data, 0);
 			_translation = GetString(data, 1);
-			_transkription = GetString(data, 2);
+			_transcription = GetString(data, 2);
 		}
 
 		public WordItem(WordItemDTO dto)
 		{
-			_word = dto.word;
-			_translation = dto.translation;
-			_transkription = dto.transkription;
-			_ratio = dto.ratio;
-			_viewed = dto.viewed;
+			_word = dto.w;
+			_translation = dto.tsl;
+			_transcription = dto.tcr;
+			_ratio = dto.r;
+			_viewed = dto.v;
 		}
 
 		public void Update(WordItem other)
 		{
 			_word = other.Word;
 			_translation = other.Translation;
-			_transkription = other.Transcription;
+			_transcription = other.Transcription;
 		}
 
 		private string GetString(string[] data, int index)
@@ -76,7 +71,7 @@ namespace WordMaster
 			return index < data.Length ? data[index] : string.Empty;
 		}
 
-		private int GetInt(string[] data, int index)
+		/*private int GetInt(string[] data, int index)
 		{
 			string str = GetString(data, index);
 			if (string.IsNullOrEmpty(str))
@@ -84,7 +79,7 @@ namespace WordMaster
 
 			int.TryParse(str, out int result);
 			return result;
-		}
+		}*/
 
 		public void AnswerCorrect()
 		{
@@ -109,7 +104,7 @@ namespace WordMaster
 			sb.Append(" | ");
 			sb.Append(_translation);
 			sb.Append(" | ");
-			sb.Append("[" + _transkription + "]");
+			sb.Append("[" + _transcription + "]");
 			sb.Append(" | R:");
 			sb.Append(Ratio);
 			sb.Append(" | V:");
@@ -117,13 +112,13 @@ namespace WordMaster
 			return sb.ToString();
 		}
 
-		public bool IsTranslateFinished(string textForCheck, bool isReverce)
+		/*public bool IsTranslateFinished(string textForCheck, bool isReverce)
 		{
 			string longText = !isReverce ? _word : _translation;
 
 			bool isEqualLedgth = longText.Length == textForCheck.Length;
 			return IsCorrectTranslation(textForCheck, isReverce) && isEqualLedgth;
-		}
+		}*/
 
 		public bool IsCorrectTranslation(string textForCheck, bool isReverce)
 		{

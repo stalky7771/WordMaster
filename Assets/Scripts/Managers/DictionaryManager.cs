@@ -6,66 +6,62 @@ namespace WordMaster
 {
 	public class DictionaryManager : BaseManager
 	{
-		//private string PATH_CSV = @"C:\_DATA\_Projects\WordMaster\Assets\Dicts\Dictionary.csv";
-
 		public event Action OnUpdateUi;
+		public event Action OnDictionaryFinished;
 		public event Action<WordItem> OnSetNewWord;
 		public event Action<WordItem> OnWordFinished;
-		public event Action<Dictionary> OnPrintVocabulary;
+		public event Action<Dictionary> OnPrintDictionary;
 
-		private Dictionary _vocabulary;
-		public Dictionary Vocabulary => _vocabulary;
+		private Dictionary _dictionary;
+		public Dictionary Dictionary => _dictionary;
 
 		public string Masked { get; private set; }
 		//public string PathJson => Application.persistentDataPath + "/dictionary.voc";
-		public string PathJson => @"D:\DOWNLOAD\L15.dict";
+		public string PathJson => @"D:\DOWNLOAD\111.dict";
 
 		private string _lastEnteredText;
 
-		private WordItem _currentWord;
-		public WordItem CurrentWord
-		{
-			get { return _currentWord ??= WordItem.EmptyWord; }
-			private set => _currentWord = value;
-		}
+		public WordItem CurrentWord { get; private set; }
 
 		public override void InitAwake()
 		{
-			_vocabulary = new Dictionary();
+			_dictionary = new Dictionary();
 			base.InitAwake();
 		}
 
 		public override void InitStart()
 		{
+			Context.Options.OnUpdate += Update;
+
 			LoadFromJson();
 
-			if (_vocabulary.IsEmpty)
+			if (_dictionary.IsEmpty)
 			{
-				_vocabulary.SetDefaultData();
+				OnDictionaryFinished?.Invoke();
+				return;
 			}
-			CurrentWord = Vocabulary.NextWord;
+
+			CurrentWord = Dictionary.NextWord;
+
+			if (CurrentWord == null)
+			{
+				OnDictionaryFinished?.Invoke();
+				return;
+			}
+
 			ProcessWord(string.Empty);
 			OnSetNewWord?.Invoke(CurrentWord);
-
-			Context.Options.OnUpdate += Update;
 		}
-
-		/*public void LoadFromCSV()
-		{
-			_vocabulary.LoadFromCSV(PATH_CSV);
-		}*/
 
 		public void SaveToJson()
 		{
-			//_vocabulary.SetDefaultData();
-
-			string json = JsonUtility.ToJson(new DictionaryDTO(_vocabulary), true);
-			File.WriteAllText(PathJson, json);
+			string json = JsonUtility.ToJson(new DictionaryDTO(_dictionary), true);
+			File.WriteAllText(_dictionary.Path, json);
 		}
 
 		public void LoadFromJson()
 		{
-			_vocabulary.LoadFromJson(PathJson);
+			_dictionary.LoadFromJson(PathJson);
 		}
 
 		public void Update()
@@ -79,6 +75,12 @@ namespace WordMaster
 
 			_lastEnteredText = text;
 
+			if (CurrentWord == null)
+			{
+				OnDictionaryFinished?.Invoke();
+				return;
+			}
+
 			if (CurrentWord.IsCorrectTranslation(text, isReversed))
 			{
 				Masked = CurrentWord.GetMaskedText(text, isReversed).SetColor("white");
@@ -87,9 +89,17 @@ namespace WordMaster
 				{
 					CurrentWord.AnswerCorrect();
 					OnWordFinished?.Invoke(CurrentWord);
-					CurrentWord = Vocabulary.NextWord;
+					CurrentWord = Dictionary.NextWord;
+
+					OnPrintDictionary?.Invoke(Dictionary);
+
+					if (CurrentWord == null)
+					{
+						OnDictionaryFinished?.Invoke();
+						return;
+					}
+
 					OnSetNewWord?.Invoke(CurrentWord);
-					OnPrintVocabulary?.Invoke(Vocabulary);
 					return;
 				}
 			}
@@ -101,19 +111,18 @@ namespace WordMaster
 					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
 
 				CurrentWord.AnswerWrong();
-
 			}
 
-			OnPrintVocabulary?.Invoke(Vocabulary);
+			OnPrintDictionary?.Invoke(Dictionary);
 			OnUpdateUi?.Invoke();
 		}
 
-		public void DeleteCurrentWord()
+		public void RemoveCurrentWord()
 		{
-			_vocabulary.DeleteWord(CurrentWord);
-			CurrentWord = Vocabulary.NextWord;
+			_dictionary.DeleteWord(CurrentWord);
+			CurrentWord = Dictionary.NextWord;
 			OnSetNewWord?.Invoke(CurrentWord);
-			OnPrintVocabulary?.Invoke(Vocabulary);
+			OnPrintDictionary?.Invoke(Dictionary);
 		}
 	}
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace WordMaster
 {
@@ -14,7 +16,6 @@ namespace WordMaster
 		[SerializeField] private string _name;
 		[SerializeField] private List<WordItem> _words = new List<WordItem>();
 		[SerializeField] private string _path;
-		[SerializeField] private int _currentIndex;
 
 		public int Version => _version;
 		public string Name => _name;
@@ -48,28 +49,45 @@ namespace WordMaster
 			_words.Add(new WordItem("whether", "погода", "ˈwɛðə"));
 		}
 
+		public bool IsFinished => _words.Where(w => w.Ratio != WordItem.MAX_RATIO).ToList().Count == 0;
+
+		public bool IsEmpty => _words.Count == 0;
+
 		public WordItem NextWord
 		{
 			get
 			{
-				if (IsEmpty)
+				if (IsEmpty || IsFinished)
 				{
-					return WordItem.EmptyWord;
+					return null;
 				}
 
-				_currentIndex++;
+				var worstWord = FindWordWithWorstRatio(0.3f);
+				if (worstWord != null)
+					return worstWord;
 
-				if (_currentIndex > _words.Count - 1)
-					_currentIndex = 0;
+				var availableWords = _words.Where(w => w.Ratio < WordItem.MAX_RATIO).OrderBy(w => w.Viewed).ToList();
 
-				return _words[_currentIndex];
+				var wordWithMinVied = availableWords[0];
+
+				var allWordsWithSameView = availableWords.Where(w => w.Viewed == wordWithMinVied.Viewed).ToList();
+
+				return allWordsWithSameView[Random.Range(0, allWordsWithSameView.Count - 1)];
 			}
 		}
 
-		public bool IsEmpty => _words.Count == 0;
+		private WordItem FindWordWithWorstRatio(float probability)
+		{
+			if (Random.value > probability)
+				return null;
+
+			int minRatio = _words.Min(w => w.Ratio);
+			return _words.Find(w => w.Ratio == minRatio);
+		}
 
 		public void SaveToJson(string path)
 		{
+			_path = path;
 			using var outputFile = new StreamWriter(path);
 			outputFile.Write(JsonHelper.Serialize(new DictionaryDTO(this)));
 		}
@@ -78,6 +96,8 @@ namespace WordMaster
 		{
 			if (File.Exists(path) == false)
 				return;
+
+			_path = path;
 
 			string json = File.ReadAllText(path);
 			var dto = JsonHelper.Deserialize(json);
@@ -94,7 +114,7 @@ namespace WordMaster
 
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 
 			foreach (var w in _words)
 			{
@@ -122,8 +142,7 @@ namespace WordMaster
 		{
 			_words.Add(word);
 		}
-
-
+		
 		public void RemoveWord(int index)
 		{
 			_words.RemoveAt(index);

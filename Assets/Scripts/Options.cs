@@ -9,6 +9,7 @@ namespace WordMaster
 		private const string SHOW_FIRST_LETTER = "ShowFirstLetter";
 		private const string SHOW_CORRECT_WORD = "ShowCorrectWord";
 		private const string IS_REVERSED = "IsReversed";
+		private const string SHOW_RIGHT_PANEL = "ShowRightPanel";
 
 		public event Action OnUpdate;
 
@@ -61,6 +62,12 @@ namespace WordMaster
 				SetBool(IS_REVERSED, value);
 				OnUpdate?.Invoke();
 			}
+		}
+
+		public bool IsShowRightPanel
+		{
+			get => GetBool(SHOW_RIGHT_PANEL);
+			set => SetBool(SHOW_RIGHT_PANEL, value);
 		}
 
 		private static bool GetBool(string key)

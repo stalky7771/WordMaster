@@ -5,11 +5,11 @@ namespace WordMaster
 	[Serializable]
 	public class WordItemDTO
 	{
-		public string word;
-		public string translation;
-		public string transkription;
-		public int ratio;
-		public int viewed;
+		public string w;
+		public string tsl;
+		public string tcr;
+		public int r;
+		public int v;
 
 		public WordItemDTO()
 		{
@@ -18,11 +18,11 @@ namespace WordMaster
 
 		public WordItemDTO(WordItem wordItem)
 		{
-			word = wordItem.WordForDto;
-			translation = wordItem.TranslationForDto;
-			transkription = wordItem.Transcription;
-			ratio = wordItem.Ratio;
-			viewed = wordItem.Viewed;
+			w = wordItem.WordForDto;
+			tsl = wordItem.TranslationForDto;
+			tcr = wordItem.Transcription;
+			r = wordItem.Ratio;
+			v = wordItem.Viewed;
 		}
 	}
 }

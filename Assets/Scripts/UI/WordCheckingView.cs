@@ -9,6 +9,9 @@ public class WordCheckingView : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _textMasked;
 	[SerializeField] private TMP_InputField _inputField;
 
+	[SerializeField] private GameObject _checkPanel;
+	[SerializeField] private GameObject _dictFinishedPanel;
+
 	public string Translation
 	{
 		get => _textTranslation.text;
@@ -25,7 +28,8 @@ public class WordCheckingView : MonoBehaviour
 	{
 		Context.DictionaryManager.OnUpdateUi += OnUpdateUI;
 		Context.DictionaryManager.OnSetNewWord += OnSetNewWord;
-		Context.DictionaryManager.OnPrintVocabulary += OnPrintVocabulary;
+		Context.DictionaryManager.OnPrintDictionary += OnPrintDictionary;
+		Context.DictionaryManager.OnDictionaryFinished += OnDictionaryFinished;
 	}
 
 	private void Update()
@@ -33,13 +37,9 @@ public class WordCheckingView : MonoBehaviour
 		FocusInputField();
 	}
 
-	public void FocusInputField()
+	private void FocusInputField()
 	{
-		if (Input.GetKeyDown("delete"))
-		{
-			Debug.Log(">>> delete key was pressed");
-			//Context.DictionaryManager.DeleteCurrentWord();
-		}
+		CheckKeyDown();
 
 		if (_inputField.isFocused)
 			return;
@@ -51,17 +51,26 @@ public class WordCheckingView : MonoBehaviour
 		//StartCoroutine(MoveTextEnd_NextFrame());
 	}
 
-	public void OnValueChanged()
+	private void CheckKeyDown()
 	{
-		//_inputManager.OnValueChanged();
-		Context.DictionaryManager.ProcessWord(_inputField.text);
+		bool isCtrl = Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.LeftControl);
+
+		if (isCtrl && Input.GetKeyDown(KeyCode.Space))
+		{
+			print("Ctrl+S key was pressed");
+		}
+
+		if (Input.GetKeyDown(KeyCode.Delete))
+		{
+			Debug.Log(">>> delete key was pressed");
+			Context.DictionaryManager.RemoveCurrentWord();
+		}
 	}
 
-	/*IEnumerator MoveTextEnd_NextFrame()
+	public void OnValueChanged()
 	{
-		yield return 0;                 // Skip the first frame in which this is called.
-		_inputField.MoveTextEnd(false); // Do this during the next frame.
-	}*/
+		Context.DictionaryManager.ProcessWord(_inputField.text);
+	}
 
 	private void OnUpdateUI()
 	{
@@ -76,8 +85,14 @@ public class WordCheckingView : MonoBehaviour
 		Masked = Context.DictionaryManager.Masked;
 	}
 
-	private void OnPrintVocabulary(Dictionary vocabulary)
+	private void OnPrintDictionary(Dictionary dictionary)
 	{
 		//_textConsole.text = vocabulary.ToString();
+	}
+
+	private void OnDictionaryFinished()
+	{
+		_checkPanel.SetActive(false);
+		_dictFinishedPanel.SetActive(true);
 	}
 }

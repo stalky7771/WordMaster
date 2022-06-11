@@ -8,11 +8,11 @@ public class ConsoleView : MonoBehaviour
 
 	void Start()
     {
-	    Context.DictionaryManager.OnPrintVocabulary += OnPrintVocabulary;
+	    Context.DictionaryManager.OnPrintDictionary += OnPrintDictionary;
 	}
 
-	private void OnPrintVocabulary(Dictionary vocabulary)
+	private void OnPrintDictionary(Dictionary dictionary)
 	{
-		_text.text = vocabulary.ToString();
+		_text.text = dictionary.ToString();
 	}
 }

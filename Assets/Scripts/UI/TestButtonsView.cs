@@ -9,21 +9,19 @@ public class TestButtonsView : MonoBehaviour
 		
 	}
 
-	public void OnClickLoadFromCSV()
-	{
-		Debug.Log(">>> OnClickLoadFromCSV");
-		//DictionaryManager.LoadFromCSV();
-	}
-
-	public void OnClickLoadFromJson()
+	public void OnClickLoad()
 	{
 		Debug.Log(">>> OnClickLoadFromJson");
 		//Context.DictionaryManager.LoadFromJson();
 	}
 
-	public void OnClickSaveToJson()
+	public void OnClickSave()
 	{
-		//Debug.Log(">>> OnClickSaveToJson");
 		Context.DictionaryManager.SaveToJson();
+	}
+
+	public void OnClickRemoveWord()
+	{
+		Context.DictionaryManager.RemoveCurrentWord();
 	}
 }
