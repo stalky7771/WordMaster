@@ -1,18 +1,13 @@
 using UnityEngine;
 using WordMaster;
 
-public class TestButtonsView : MonoBehaviour
+public class MainMenuView : MonoBehaviour
 {
+	[SerializeField] private GameObject _console;
+
 	public void OnClickTest()
 	{
 		Debug.Log(">>> OnClickTest");
-		
-	}
-
-	public void OnClickLoad()
-	{
-		Debug.Log(">>> OnClickLoadFromJson");
-		//Context.DictionaryManager.LoadFromJson();
 	}
 
 	public void OnClickSave()
@@ -23,5 +18,10 @@ public class TestButtonsView : MonoBehaviour
 	public void OnClickRemoveWord()
 	{
 		Context.DictionaryManager.RemoveCurrentWord();
+	}
+
+	public void OnClickShowConsole()
+	{
+		_console.SetActive(!_console.activeSelf);
 	}
 }

@@ -16,8 +16,7 @@ namespace WordMaster
 		public Dictionary Dictionary => _dictionary;
 
 		public string Masked { get; private set; }
-		//public string PathJson => Application.persistentDataPath + "/dictionary.voc";
-		public string PathJson => @"D:\DOWNLOAD\111.dict";
+		//public string FileName => Application.persistentDataPath + "/dictionary.voc";
 
 		private string _lastEnteredText;
 
@@ -33,7 +32,25 @@ namespace WordMaster
 		{
 			Context.Options.OnUpdate += Update;
 
-			LoadFromJson();
+			var fileName = Context.Options.DictionaryFileName;
+
+			if (string.IsNullOrEmpty(fileName))
+				fileName = @"D:\DOWNLOAD\L15.dict";
+
+			LoadFromJson(fileName);
+		}
+
+		public void SaveToJson()
+		{
+			string json = JsonUtility.ToJson(new DictionaryDTO(_dictionary), true);
+			File.WriteAllText(_dictionary.FileName, json);
+		}
+
+		public void LoadFromJson(string fileName)
+		{
+			_dictionary.LoadFromJson(fileName);
+			Context.Options.DictionaryFileName = fileName;
+			OnPrintDictionary?.Invoke(_dictionary);
 
 			if (_dictionary.IsEmpty)
 			{
@@ -49,29 +66,18 @@ namespace WordMaster
 				return;
 			}
 
-			ProcessWord(string.Empty);
+			InputWord(string.Empty);
 			OnSetNewWord?.Invoke(CurrentWord);
-		}
-
-		public void SaveToJson()
-		{
-			string json = JsonUtility.ToJson(new DictionaryDTO(_dictionary), true);
-			File.WriteAllText(_dictionary.Path, json);
-		}
-
-		public void LoadFromJson()
-		{
-			_dictionary.LoadFromJson(PathJson);
 		}
 
 		public void Update()
 		{
-			ProcessWord(_lastEnteredText);
+			InputWord(_lastEnteredText);
 		}
 
-		public void ProcessWord(string text)
+		public void InputWord(string text, bool isEndEdit = false)
 		{
-			bool isReversed = Context.Options.IsReversed;
+			var isReversed = Context.Options.IsReversed;
 
 			_lastEnteredText = text;
 
@@ -81,7 +87,14 @@ namespace WordMaster
 				return;
 			}
 
-			if (CurrentWord.IsCorrectTranslation(text, isReversed))
+			var isCorrectWord = CurrentWord.IsCorrectTranslation(text, isReversed);
+
+			if (isEndEdit)
+			{
+				isCorrectWord &= CurrentWord.IsTranslateFinished(text, isReversed);
+			}
+
+			if (isCorrectWord)
 			{
 				Masked = CurrentWord.GetMaskedText(text, isReversed).SetColor("white");
 
@@ -105,8 +118,8 @@ namespace WordMaster
 			}
 			else
 			{
-				string phrase = CurrentWord.Word;
-				Masked = Context.Options.ShowCorrectWord
+				var phrase = CurrentWord.Word;
+				Masked = Context.Options.ShowCorrectWord || isEndEdit
 					? phrase.SetColor("red")
 					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
 

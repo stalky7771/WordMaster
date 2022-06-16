@@ -7,6 +7,8 @@ namespace WordMaster
 	{
 		public static DictionaryManager DictionaryManager { get; private set; }
 		public static Options Options { get; private set; }
+		public static FpsCounter FpsCounter { get; private set; }
+		public static Version Version { get; private set; }
 
 		private static readonly List<BaseManager> _managers = new List<BaseManager>();
 
@@ -14,6 +16,8 @@ namespace WordMaster
 		{
 			Application.targetFrameRate = 45;
 			Options = new Options();
+			FpsCounter = new FpsCounter();
+			Version = new Version();
 			_managers.Add(DictionaryManager = new DictionaryManager());
 		}
 
@@ -26,6 +30,11 @@ namespace WordMaster
 		private void Start()
 		{
 			_managers.ForEach(m => m.InitStart());
+		}
+
+		private void Update()
+		{
+			FpsCounter.Update();
 		}
 	}
 }

@@ -112,13 +112,13 @@ namespace WordMaster
 			return sb.ToString();
 		}
 
-		/*public bool IsTranslateFinished(string textForCheck, bool isReverce)
+		public bool IsTranslateFinished(string textForCheck, bool isReverce)
 		{
 			string longText = !isReverce ? _word : _translation;
 
 			bool isEqualLedgth = longText.Length == textForCheck.Length;
 			return IsCorrectTranslation(textForCheck, isReverce) && isEqualLedgth;
-		}*/
+		}
 
 		public bool IsCorrectTranslation(string textForCheck, bool isReverce)
 		{

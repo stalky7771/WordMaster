@@ -15,12 +15,12 @@ namespace WordMaster
 		[SerializeField] private int _version;
 		[SerializeField] private string _name;
 		[SerializeField] private List<WordItem> _words = new List<WordItem>();
-		[SerializeField] private string _path;
+		[SerializeField] private string _fileName;
 
 		public int Version => _version;
 		public string Name => _name;
 		public List<WordItem> Words => _words;
-		public string Path => _path;
+		public string FileName => _fileName;
 
 		public Dictionary()
 		{
@@ -87,19 +87,19 @@ namespace WordMaster
 
 		public void SaveToJson(string path)
 		{
-			_path = path;
+			_fileName = path;
 			using var outputFile = new StreamWriter(path);
 			outputFile.Write(JsonHelper.Serialize(new DictionaryDTO(this)));
 		}
 
-		public void LoadFromJson(string path)
+		public void LoadFromJson(string fileName)
 		{
-			if (File.Exists(path) == false)
+			if (File.Exists(fileName) == false)
 				return;
 
-			_path = path;
+			_fileName = fileName;
 
-			string json = File.ReadAllText(path);
+			string json = File.ReadAllText(fileName);
 			var dto = JsonHelper.Deserialize(json);
 
 			_version = dto.version;

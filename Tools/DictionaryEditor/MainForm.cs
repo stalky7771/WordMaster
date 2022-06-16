@@ -35,11 +35,17 @@ namespace WordMasterEditor
 			}
 		}
 
+		public class Test
+		{
+			private int i;
+			private int i2;
+		}
+
 		private void testToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//WordForm newForm = new WordForm();
 			//newForm.Show();
-			DictionaryManager.ConvertDictionary();
+			//DictionaryManager.ConvertDictionary();
 		}
 
 		private void OnShowDictionary(Dictionary dictionary)

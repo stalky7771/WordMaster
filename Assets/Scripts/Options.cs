@@ -9,7 +9,8 @@ namespace WordMaster
 		private const string SHOW_FIRST_LETTER = "ShowFirstLetter";
 		private const string SHOW_CORRECT_WORD = "ShowCorrectWord";
 		private const string IS_REVERSED = "IsReversed";
-		private const string SHOW_RIGHT_PANEL = "ShowRightPanel";
+		private const string SHOW_OPTIONS_PANEL = "ShowOptionsPanel";
+		private const string DICTIONARY_FILE_NAME = "DictionaryFileName";
 
 		public event Action OnUpdate;
 
@@ -64,10 +65,16 @@ namespace WordMaster
 			}
 		}
 
-		public bool IsShowRightPanel
+		public bool IsShowOptionsPanel
 		{
-			get => GetBool(SHOW_RIGHT_PANEL);
-			set => SetBool(SHOW_RIGHT_PANEL, value);
+			get => GetBool(SHOW_OPTIONS_PANEL);
+			set => SetBool(SHOW_OPTIONS_PANEL, value);
+		}
+
+		public string DictionaryFileName
+		{
+			get => PlayerPrefs.GetString(DICTIONARY_FILE_NAME, string.Empty);
+			set => PlayerPrefs.SetString(DICTIONARY_FILE_NAME, value);
 		}
 
 		private static bool GetBool(string key)

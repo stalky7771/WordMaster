@@ -1,19 +1,16 @@
+using System;
 using TMPro;
 using UnityEngine;
+using WordMaster;
 
-public class FpsCounterView : MonoBehaviour
+public class FpsCounter
 {
-	[SerializeField] private TextMeshProUGUI _text;
 	private double _cached;
 	private int _fpsCached;
 
-	private void Start()
-	{
-		
+	public event Action<string> OnUpdate;
 
-	}
-
-    private void Update()
+	public void Update()
     {
 		double time = Time.realtimeSinceStartupAsDouble;
 		double delta = time - _cached;
@@ -26,7 +23,7 @@ public class FpsCounterView : MonoBehaviour
 			{
 				_fpsCached = fps;
 			}
-			_text.text = $"fps:{_fpsCached}";
+			OnUpdate?.Invoke($"fps:{_fpsCached}");
 		}
-    }
+	}
 }

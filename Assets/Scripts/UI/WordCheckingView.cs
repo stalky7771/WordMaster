@@ -60,16 +60,37 @@ public class WordCheckingView : MonoBehaviour
 			print("Ctrl+S key was pressed");
 		}
 
-		if (Input.GetKeyDown(KeyCode.Delete))
+		if (Input.GetKeyDown(KeyCode.Return))
 		{
-			Debug.Log(">>> delete key was pressed");
-			Context.DictionaryManager.RemoveCurrentWord();
+			//_inputField
+			//var temp = _inputField.text;
+			//_inputField.text = string.Empty;
+			//_inputField.text = "777";
+			//Context.DictionaryManager.InputWord(_inputField.text, true);
+
+			//var eventSystem = EventSystem.current;
+			//if (!eventSystem.alreadySelecting) eventSystem.SetSelectedGameObject(null);
 		}
+
+		//if (Input.GetKeyDown(KeyCode.Delete))
+		//{
+		//	Debug.Log(">>> delete key was pressed");
+		//	Context.DictionaryManager.RemoveCurrentWord();
+		//}
 	}
 
-	public void OnValueChanged()
+	private bool _isEndEdit;
+	public void OnValueChanged(string text)
 	{
-		Context.DictionaryManager.ProcessWord(_inputField.text);
+		if (text.EndsWith("\n"))
+		{
+			_isEndEdit = true;
+			_inputField.text = text.Remove(text.Length - 1);
+			return;
+		}
+
+		Context.DictionaryManager.InputWord(text, _isEndEdit);
+		_isEndEdit = false;
 	}
 
 	private void OnUpdateUI()
