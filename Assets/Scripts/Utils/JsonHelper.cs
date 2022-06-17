@@ -4,14 +4,14 @@ namespace WordMaster
 {
 	internal class JsonHelper
 	{
-		public static string Serialize(DictionaryDTO dto)
+		public static string Serialize(DictionaryDto dto)
 		{
 			return JsonConvert.SerializeObject(dto, Formatting.Indented);
 		}
 
-		public static DictionaryDTO Deserialize(string json)
+		public static DictionaryDto Deserialize(string json)
 		{
-			return JsonConvert.DeserializeObject<DictionaryDTO>(json);
+			return JsonConvert.DeserializeObject<DictionaryDto>(json);
 		}
 	}
 }

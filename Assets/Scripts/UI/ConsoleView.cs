@@ -6,13 +6,18 @@ public class ConsoleView : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI _text;
 
-	void Start()
+	void OnEnable()
     {
 	    Context.DictionaryManager.OnPrintDictionary += OnPrintDictionary;
 	}
 
+	void OnDisable()
+	{
+		Context.DictionaryManager.OnPrintDictionary -= OnPrintDictionary;
+	}
+
 	private void OnPrintDictionary(Dictionary dictionary)
 	{
-		_text.text = dictionary.ToString();
+		_text.text = dictionary.ToString().ToMonoSpace();
 	}
 }

@@ -10,15 +10,15 @@ namespace WordMaster
 		private const string SHOW_CORRECT_WORD = "ShowCorrectWord";
 		private const string IS_REVERSED = "IsReversed";
 		private const string SHOW_OPTIONS_PANEL = "ShowOptionsPanel";
-		private const string DICTIONARY_FILE_NAME = "DictionaryFileName";
+		private const string DICTIONARY_FILE_NAME = "DictionaryFileName2";
 
 		public event Action OnUpdate;
 
 		public Options()
 		{
-			WordItem.IsReversed = IsReversed;
-			WordItem.ShowWordLength = ShowWordLength;
-			WordItem.ShowFirstLetter = ShowFirstLetter;
+			Word.IsReversed = IsReversed;
+			Word.ShowWordLength = ShowWordLength;
+			Word.ShowFirstLetter = ShowFirstLetter;
 		}
 
 		public bool ShowWordLength
@@ -26,7 +26,7 @@ namespace WordMaster
 			get => GetBool(SHOW_WORD_LENGTH);
 			set
 			{
-				WordItem.ShowWordLength = value;
+				Word.ShowWordLength = value;
 				SetBool(SHOW_WORD_LENGTH, value);
 				OnUpdate?.Invoke();
 			}
@@ -38,7 +38,7 @@ namespace WordMaster
 			get => GetBool(SHOW_FIRST_LETTER);
 			set
 			{
-				WordItem.ShowFirstLetter = value;
+				Word.ShowFirstLetter = value;
 				SetBool(SHOW_FIRST_LETTER, value);
 				OnUpdate?.Invoke();
 			}
@@ -59,7 +59,7 @@ namespace WordMaster
 			get => GetBool(IS_REVERSED);
 			set
 			{
-				WordItem.IsReversed = value;
+				Word.IsReversed = value;
 				SetBool(IS_REVERSED, value);
 				OnUpdate?.Invoke();
 			}

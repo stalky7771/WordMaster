@@ -3,21 +3,23 @@ using UnityEngine;
 
 namespace WordMaster
 {
-	public class WordItem
+	public class Word
 	{
 		public const int MIN_RATIO = -5;
 		public const int MAX_RATIO = 7;
-		private string _word;
+		private string _value;
 		private string _translation;
-		private string _transcription;
 		private int _ratio;
 		private int _viewed;
 
-		public string Word => IsReversed ? _translation : _word;
-		public string Translation => IsReversed ? _word : _translation;
-		public string Transcription => _transcription;
+		public string Value => IsReversed ? _translation : _value;
+		public string Translation => IsReversed ? _value : _translation;
+		public string Transcription { get; private set; }
+		public string Description { get; private set; }
 
-		public string WordForDto => _word;
+		public string DescriptionWithCensure => Description.Replace(Value, new string('*', Value.Length));
+
+		public string ValueForDto => _value;
 		public string TranslationForDto => _translation;
 
 		public int Ratio
@@ -36,50 +38,36 @@ namespace WordMaster
 			private set => _viewed = value;
 		}
 
-		public WordItem(string word, string translation, string transcription = "")
+		public Word(string value, string translation, string transcription = "")
 		{
-			_word = word;
+			_value = value;
 			_translation = translation;
-			_transcription = transcription;
+			Transcription = transcription;
 		}
 
-		public WordItem(string[] data)
+		public Word(WordDto dto)
 		{
-			_word = GetString(data, 0);
-			_translation = GetString(data, 1);
-			_transcription = GetString(data, 2);
-		}
-
-		public WordItem(WordItemDTO dto)
-		{
-			_word = dto.w;
+			_value = dto.w;
 			_translation = dto.tsl;
-			_transcription = dto.tcr;
+			Transcription = dto.tcr;
+			Description = dto.dcr;
+
 			_ratio = dto.r;
 			_viewed = dto.v;
 		}
 
-		public void Update(WordItem other)
+		public void Update(Word other)
 		{
-			_word = other.Word;
+			_value = other.Value;
 			_translation = other.Translation;
-			_transcription = other.Transcription;
+			Transcription = other.Transcription;
+			Description = other.Description;
 		}
 
 		private string GetString(string[] data, int index)
 		{
 			return index < data.Length ? data[index] : string.Empty;
 		}
-
-		/*private int GetInt(string[] data, int index)
-		{
-			string str = GetString(data, index);
-			if (string.IsNullOrEmpty(str))
-				return 0;
-
-			int.TryParse(str, out int result);
-			return result;
-		}*/
 
 		public void AnswerCorrect()
 		{
@@ -100,11 +88,11 @@ namespace WordMaster
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.Append(_word);
+			sb.Append(_value);
 			sb.Append(" | ");
 			sb.Append(_translation);
 			sb.Append(" | ");
-			sb.Append("[" + _transcription + "]");
+			sb.Append("[" + Transcription + "]");
 			sb.Append(" | R:");
 			sb.Append(Ratio);
 			sb.Append(" | V:");
@@ -114,7 +102,7 @@ namespace WordMaster
 
 		public bool IsTranslateFinished(string textForCheck, bool isReverce)
 		{
-			string longText = !isReverce ? _word : _translation;
+			string longText = !isReverce ? _value : _translation;
 
 			bool isEqualLedgth = longText.Length == textForCheck.Length;
 			return IsCorrectTranslation(textForCheck, isReverce) && isEqualLedgth;
@@ -122,7 +110,7 @@ namespace WordMaster
 
 		public bool IsCorrectTranslation(string textForCheck, bool isReverce)
 		{
-			string translation = isReverce ? _translation : _word;
+			string translation = isReverce ? _translation : _value;
 
 			for (int i = 0; i < Mathf.Min(textForCheck.Length, translation.Length); i++)
 			{
@@ -137,7 +125,7 @@ namespace WordMaster
 
 		public string GetMaskedText(string textForCheck, bool isReverse)
 		{
-			string longText = isReverse ? _translation : _word;
+			string longText = isReverse ? _translation : _value;
 
 			string result = string.Empty;
 
@@ -167,7 +155,7 @@ namespace WordMaster
 
 		public bool IsFullTranslation(string textForCheck, bool isReverse)
 		{
-			string translation = isReverse ? _translation : _word;
+			string translation = isReverse ? _translation : _value;
 
 			if (textForCheck.Length != translation.Length)
 			{

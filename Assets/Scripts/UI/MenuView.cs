@@ -23,5 +23,7 @@ public class MenuView : MonoBehaviour
 	public void OnClickShowConsole()
 	{
 		_console.SetActive(!_console.activeSelf);
+		if (_console.activeSelf)
+			Context.DictionaryManager.PrintDictionary();
 	}
 }

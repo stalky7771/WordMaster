@@ -7,6 +7,7 @@ public class WordCheckingView : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI _textTranslation;
 	[SerializeField] private TextMeshProUGUI _textMasked;
+	[SerializeField] private TextMeshProUGUI _textDescription;
 	[SerializeField] private TMP_InputField _inputField;
 
 	[SerializeField] private GameObject _checkPanel;
@@ -14,14 +15,17 @@ public class WordCheckingView : MonoBehaviour
 
 	public string Translation
 	{
-		get => _textTranslation.text;
-		set => _textTranslation.text = value.ToMonoSpace();
+		set => _textTranslation.text = value;
 	}
 
 	public string Masked
 	{
-		get => _textMasked.text;
-		set => _textMasked.text = value.ToMonoSpace();
+		set => _textMasked.text = value;
+	}
+
+	public string Description
+	{
+		set => _textDescription.text = value;
 	}
 
 	private void Start()
@@ -97,12 +101,14 @@ public class WordCheckingView : MonoBehaviour
 	{
 		Translation = Context.DictionaryManager.CurrentWord.Translation;
 		Masked = Context.DictionaryManager.Masked;
+		Description = Context.DictionaryManager.CurrentWord.DescriptionWithCensure;
 	}
 
-	private void OnSetNewWord(WordItem word)
+	private void OnSetNewWord(Word word)
 	{
 		_inputField.text = string.Empty;
 		Translation = word.Translation;
+		Description = word.DescriptionWithCensure;
 		Masked = Context.DictionaryManager.Masked;
 	}
 

@@ -9,8 +9,8 @@ namespace WordMaster
 		public event Action OnUpdateUi;
 		public event Action OnDictionaryFinished;
 		public event Action OnSaveDictionary;
-		public event Action<WordItem> OnSetNewWord;
-		public event Action<WordItem> OnWordFinished;
+		public event Action<Word> OnSetNewWord;
+		public event Action<Word> OnWordFinished;
 		public event Action<Dictionary> OnPrintDictionary;
 
 		private Dictionary _dictionary;
@@ -21,7 +21,7 @@ namespace WordMaster
 
 		private string _lastEnteredText;
 
-		public WordItem CurrentWord { get; private set; }
+		public Word CurrentWord { get; private set; }
 
 		private int _wordViewCounter;
 
@@ -38,14 +38,14 @@ namespace WordMaster
 			var fileName = Context.Options.DictionaryFileName;
 
 			if (string.IsNullOrEmpty(fileName))
-				fileName = @"D:\DOWNLOAD\L15.dict";
+				fileName = @"D:\_RESEARCH\UNITY\Dictionaries\L15.dict";
 
 			LoadFromJson(fileName);
 		}
 
 		public void SaveToJson()
 		{
-			string json = JsonUtility.ToJson(new DictionaryDTO(_dictionary), true);
+			string json = JsonUtility.ToJson(new DictionaryDto(_dictionary), true);
 			File.WriteAllText(_dictionary.FileName, json);
 			_wordViewCounter = 0;
 		}
@@ -132,7 +132,7 @@ namespace WordMaster
 			}
 			else
 			{
-				var phrase = CurrentWord.Word;
+				var phrase = CurrentWord.Value;
 				Masked = Context.Options.ShowCorrectWord || isEndEdit
 					? phrase.SetColor("red")
 					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
@@ -149,6 +149,11 @@ namespace WordMaster
 			_dictionary.DeleteWord(CurrentWord);
 			CurrentWord = Dictionary.NextWord;
 			OnSetNewWord?.Invoke(CurrentWord);
+			OnPrintDictionary?.Invoke(Dictionary);
+		}
+
+		public void PrintDictionary()
+		{
 			OnPrintDictionary?.Invoke(Dictionary);
 		}
 	}

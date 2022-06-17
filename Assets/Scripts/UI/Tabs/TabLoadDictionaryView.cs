@@ -20,7 +20,7 @@ public class TabLoadDictionaryView : MonoBehaviour
 
 	public void ShowTable()
 	{
-		var path = @"D:\DOWNLOAD\"; // Application.dataPath
+		var path = @"D:\_RESEARCH\UNITY\Dictionaries\"; // Application.dataPath
 		var files = FileHelper.GetFiles(path);
 
 		AddItems(files);

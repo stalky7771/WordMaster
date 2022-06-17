@@ -24,7 +24,7 @@ public class StatusBarView : MonoBehaviour
 		Version = Context.Version.Ver;
 	}
 
-	private void OnWordFinished(WordItem word)
+	private void OnWordFinished(Word word)
 	{
 		LeftText = word.ToString();
 	}

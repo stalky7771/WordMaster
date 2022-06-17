@@ -13,12 +13,12 @@ namespace WordMaster
 	{
 		[SerializeField] private int _version;
 		[SerializeField] private string _name;
-		[SerializeField] private List<WordItem> _words = new List<WordItem>();
+		[SerializeField] private List<Word> _words = new List<Word>();
 		[SerializeField] private string _fileName;
 
 		public int Version => _version;
 		public string Name => _name;
-		public List<WordItem> Words => _words;
+		public List<Word> Words => _words;
 		public string FileName => _fileName;
 
 		public Dictionary()
@@ -26,15 +26,15 @@ namespace WordMaster
 
 		}
 
-		public Dictionary(DictionaryDTO dto)
+		public Dictionary(DictionaryDto dto)
 		{
 			_version = dto.version;
 			_name = dto.name;
-			_words = new List<WordItem>();
+			_words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
 			{
-				_words.Add(new WordItem(wordItemDto));
+				_words.Add(new Word(wordItemDto));
 			});
 		}
 
@@ -42,17 +42,17 @@ namespace WordMaster
 		{
 			_words.Clear();
 
-			_words.Add(new WordItem("cat", "кот", "kæt"));
-			_words.Add(new WordItem("dog", "собака", "dɒg"));
-			_words.Add(new WordItem("chess", "шахматы", "ʧɛs"));
-			_words.Add(new WordItem("whether", "погода", "ˈwɛðə"));
+			_words.Add(new Word("cat", "кот", "kæt"));
+			_words.Add(new Word("dog", "собака", "dɒg"));
+			_words.Add(new Word("chess", "шахматы", "ʧɛs"));
+			_words.Add(new Word("whether", "погода", "ˈwɛðə"));
 		}
 
-		public bool IsFinished => _words.Where(w => w.Ratio != WordItem.MAX_RATIO).ToList().Count == 0;
+		public bool IsFinished => _words.Where(w => w.Ratio != Word.MAX_RATIO).ToList().Count == 0;
 
 		public bool IsEmpty => _words.Count == 0;
 
-		public WordItem NextWord
+		public Word NextWord
 		{
 			get
 			{
@@ -65,7 +65,7 @@ namespace WordMaster
 				if (worstWord != null)
 					return worstWord;
 
-				var availableWords = _words.Where(w => w.Ratio < WordItem.MAX_RATIO).OrderBy(w => w.Viewed).ToList();
+				var availableWords = _words.Where(w => w.Ratio < Word.MAX_RATIO).OrderBy(w => w.Viewed).ToList();
 
 				var wordWithMinVied = availableWords[0];
 
@@ -75,7 +75,7 @@ namespace WordMaster
 			}
 		}
 
-		private WordItem FindWordWithWorstRatio(float probability)
+		private Word FindWordWithWorstRatio(float probability)
 		{
 			if (Random.value > probability)
 				return null;
@@ -88,7 +88,7 @@ namespace WordMaster
 		{
 			_fileName = path;
 			using var outputFile = new StreamWriter(path);
-			outputFile.Write(JsonHelper.Serialize(new DictionaryDTO(this)));
+			outputFile.Write(JsonHelper.Serialize(new DictionaryDto(this)));
 		}
 
 		public void LoadFromJson(string fileName)
@@ -103,11 +103,11 @@ namespace WordMaster
 
 			_version = dto.version;
 			_name = dto.name;
-			_words = new List<WordItem>();
+			_words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
 			{
-				_words.Add(new WordItem(wordItemDto));
+				_words.Add(new Word(wordItemDto));
 			});
 		}
 
@@ -118,18 +118,18 @@ namespace WordMaster
 			foreach (var w in _words)
 			{
 				string transcription = "[" + w.Transcription + "]";
-				sb.Append($"{w.Word,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
+				sb.Append($"{w.Value,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
 			}
 
-			return sb.ToString().ToMonoSpace();
+			return sb.ToString();
 		}
 
-		public void DeleteWord(WordItem word)
+		public void DeleteWord(Word word)
 		{
 			_words.Remove(word);
 		}
 
-		public WordItem GetWordItem(int index)
+		public Word GetWordItem(int index)
 		{
 			if (index >= _words.Count)
 				return null;
@@ -137,7 +137,7 @@ namespace WordMaster
 			return _words[index];
 		}
 
-		public void AddWord(WordItem word)
+		public void AddWord(Word word)
 		{
 			_words.Add(word);
 		}
