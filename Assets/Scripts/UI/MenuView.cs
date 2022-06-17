@@ -1,13 +1,13 @@
 using UnityEngine;
 using WordMaster;
 
-public class MainMenuView : MonoBehaviour
+public class MenuView : MonoBehaviour
 {
 	[SerializeField] private GameObject _console;
 
 	public void OnClickTest()
 	{
-		Debug.Log(">>> OnClickTest");
+		Context.View?.ShowIcon();
 	}
 
 	public void OnClickSave()

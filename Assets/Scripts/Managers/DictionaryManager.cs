@@ -8,6 +8,7 @@ namespace WordMaster
 	{
 		public event Action OnUpdateUi;
 		public event Action OnDictionaryFinished;
+		public event Action OnSaveDictionary;
 		public event Action<WordItem> OnSetNewWord;
 		public event Action<WordItem> OnWordFinished;
 		public event Action<Dictionary> OnPrintDictionary;
@@ -21,6 +22,8 @@ namespace WordMaster
 		private string _lastEnteredText;
 
 		public WordItem CurrentWord { get; private set; }
+
+		private int _wordViewCounter;
 
 		public override void InitAwake()
 		{
@@ -44,6 +47,7 @@ namespace WordMaster
 		{
 			string json = JsonUtility.ToJson(new DictionaryDTO(_dictionary), true);
 			File.WriteAllText(_dictionary.FileName, json);
+			_wordViewCounter = 0;
 		}
 
 		public void LoadFromJson(string fileName)
@@ -68,6 +72,8 @@ namespace WordMaster
 
 			InputWord(string.Empty);
 			OnSetNewWord?.Invoke(CurrentWord);
+
+			_wordViewCounter = 0;
 		}
 
 		public void Update()
@@ -103,6 +109,14 @@ namespace WordMaster
 					CurrentWord.AnswerCorrect();
 					OnWordFinished?.Invoke(CurrentWord);
 					CurrentWord = Dictionary.NextWord;
+					_wordViewCounter++;
+
+					if (_wordViewCounter == 3)
+					{
+						_wordViewCounter = 0;
+						SaveToJson();
+						OnSaveDictionary?.Invoke();
+					}
 
 					OnPrintDictionary?.Invoke(Dictionary);
 

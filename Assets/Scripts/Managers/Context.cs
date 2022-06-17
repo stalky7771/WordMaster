@@ -9,6 +9,7 @@ namespace WordMaster
 		public static Options Options { get; private set; }
 		public static FpsCounter FpsCounter { get; private set; }
 		public static Version Version { get; private set; }
+		public static MainView View { get; private set; }
 
 		private static readonly List<BaseManager> _managers = new List<BaseManager>();
 
@@ -35,6 +36,11 @@ namespace WordMaster
 		private void Update()
 		{
 			FpsCounter.Update();
+		}
+
+		public static void SetView(MainView view)
+		{
+			View = view;
 		}
 	}
 }
