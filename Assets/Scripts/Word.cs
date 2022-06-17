@@ -17,7 +17,17 @@ namespace WordMaster
 		public string Transcription { get; private set; }
 		public string Description { get; private set; }
 
-		public string DescriptionWithCensure => Description.Replace(Value, new string('*', Value.Length));
+		public string DescriptionWithCensure
+		{
+			get
+			{
+				if (Description != null)
+				{
+					return Description.Replace(Value, new string('*', Value.Length));
+				}
+				return string.Empty;
+			}
+		}
 
 		public string ValueForDto => _value;
 		public string TranslationForDto => _translation;
