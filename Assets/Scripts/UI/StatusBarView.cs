@@ -12,7 +12,7 @@ public class StatusBarView : MonoBehaviour
 	public string LeftText { set => _leftText.text = value; }
 	public string MiddleText { set => _middleText.text = value; }
 
-	void Start()
+	private void Start()
 	{
 		Version = string.Empty;
 		MiddleText = string.Empty;
@@ -22,6 +22,12 @@ public class StatusBarView : MonoBehaviour
 		Context.FpsCounter.OnUpdate += OnUpdateFps;
 
 		Version = Context.Version.Ver;
+	}
+
+	private void Update()
+	{
+		if (Context.DictionaryManager.Dictionary != null)
+			LeftText = Context.DictionaryManager.Dictionary.TimeToString;
 	}
 
 	private void OnWordFinished(Word word)

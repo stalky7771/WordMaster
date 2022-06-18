@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
 using WordMaster;
 
 namespace WordMasterEditor
@@ -12,15 +9,20 @@ namespace WordMasterEditor
 		public int FocusedIndex { get; private set; }
 		public Dictionary Dictionary { get; private set; }
 		public event Action<Dictionary> OnShowDictionary;
+		public event Action<string> OnUpdateStatusBar;
 
-		public void Load(string fileName)
+		public string FilePath { get; private set; }
+
+		public void Load(string filePath)
 		{
 			try
 			{
-				using (var sr = new StreamReader(fileName))
+				using (var sr = new StreamReader(filePath))
 				{
 					string json = sr.ReadToEnd();
 					Dictionary = new Dictionary(JsonHelper.Deserialize(json));
+					FilePath = filePath;
+					OnUpdateStatusBar?.Invoke(FilePath);
 				}
 			}
 			catch (IOException exc)
@@ -32,18 +34,18 @@ namespace WordMasterEditor
 			UpdateView();
 		}
 
-		public void AddWord(WordItem word)
+		public void AddWord(Word word)
 		{
 			Dictionary.AddWord(word);
 			UpdateView();
 		}
 
-		public void UpdateWord(WordItem newWord)
+		public void UpdateWord(Word newWord)
 		{
 			if (FocusedIndex == -1)
 				return;
 
-			WordItem word = Dictionary.GetWordItem(FocusedIndex);
+			Word word = Dictionary.GetWordItem(FocusedIndex);
 			word?.Update(newWord);
 
 			UpdateView();
@@ -67,7 +69,7 @@ namespace WordMasterEditor
 
 		public void ConvertDictionary()
 		{
-			string fileIn = @"D:\_RESEARCH\UNITY\L15b.txt";
+			/*string fileIn = @"D:\_RESEARCH\UNITY\L15b.txt";
 			string fileOut = @"D:\_RESEARCH\UNITY\L15.dict";
 
 			using (var sr = new StreamReader(fileIn))
@@ -84,7 +86,7 @@ namespace WordMasterEditor
 					w = w.Trim();
 					string[] wordPair = w.Split(';');
 
-					WordItem wordItem = new WordItem(wordPair[0], wordPair[1]);
+					Word wordItem = new Word(wordPair[0], wordPair[1]);
 					newDictionary.AddWord(wordItem);
 				}
 
@@ -92,7 +94,7 @@ namespace WordMasterEditor
 
 
 				int aaa = 0;
-			}
+			}*/
 		}
 	}
 }

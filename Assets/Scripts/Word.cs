@@ -1,10 +1,19 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using UnityEngine;
 
 namespace WordMaster
 {
 	public class Word
 	{
+		public enum DataType
+		{
+			Value,
+			Translation,
+			Transcription,
+			Description
+		}
+
 		public const int MIN_RATIO = -5;
 		public const int MAX_RATIO = 7;
 		private string _value;
@@ -15,15 +24,15 @@ namespace WordMaster
 		public string Value => IsReversed ? _translation : _value;
 		public string Translation => IsReversed ? _value : _translation;
 		public string Transcription { get; private set; }
-		public string Description { get; private set; }
+		public string Example { get; private set; }
 
 		public string DescriptionWithCensure
 		{
 			get
 			{
-				if (Description != null)
+				if (Example != null)
 				{
-					return Description.Replace(Value, new string('*', Value.Length));
+					return Example.Replace(Value, new string('*', Value.Length));
 				}
 				return string.Empty;
 			}
@@ -48,11 +57,22 @@ namespace WordMaster
 			private set => _viewed = value;
 		}
 
-		public Word(string value, string translation, string transcription = "")
+		public void SetData(DataType type, string str)
 		{
-			_value = value;
-			_translation = translation;
-			Transcription = transcription;
+			str = str.Trim();
+
+			switch (type)
+			{
+				case DataType.Value: _value = str; break;
+				case DataType.Translation: _translation = str; break;
+				case DataType.Transcription: Transcription = str; break;
+				case DataType.Description: Example = str; break;
+			}
+		}
+
+		public Word()
+		{
+
 		}
 
 		public Word(WordDto dto)
@@ -60,7 +80,7 @@ namespace WordMaster
 			_value = dto.w;
 			_translation = dto.tsl;
 			Transcription = dto.tcr;
-			Description = dto.dcr;
+			Example = dto.expl;
 
 			_ratio = dto.r;
 			_viewed = dto.v;
@@ -71,7 +91,7 @@ namespace WordMaster
 			_value = other.Value;
 			_translation = other.Translation;
 			Transcription = other.Transcription;
-			Description = other.Description;
+			Example = other.Example;
 		}
 
 		private string GetString(string[] data, int index)

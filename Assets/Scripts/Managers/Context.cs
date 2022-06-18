@@ -36,6 +36,7 @@ namespace WordMaster
 		private void Update()
 		{
 			FpsCounter.Update();
+			DictionaryManager.UpdateByTime();
 		}
 
 		public static void SetView(MainView view)

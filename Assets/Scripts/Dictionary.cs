@@ -8,45 +8,38 @@ using Random = UnityEngine.Random;
 
 namespace WordMaster
 {
-	[Serializable]
 	public class Dictionary
 	{
-		[SerializeField] private int _version;
-		[SerializeField] private string _name;
-		[SerializeField] private List<Word> _words = new List<Word>();
-		[SerializeField] private string _fileName;
+		private int _version;
+		private string _name;
+		public float _time;
+		private List<Word> _words = new List<Word>();
+		private string _fileName;
 
 		public int Version => _version;
+		public float Time => _time;
 		public string Name => _name;
 		public List<Word> Words => _words;
 		public string FileName => _fileName;
-
+		
 		public Dictionary()
 		{
 
 		}
 
-		public Dictionary(DictionaryDto dto)
+		/*public Dictionary(DictionaryDto dto)
 		{
 			_version = dto.version;
 			_name = dto.name;
+			_time = dto.time;
+
 			_words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
 			{
 				_words.Add(new Word(wordItemDto));
 			});
-		}
-
-		public void SetDefaultData()
-		{
-			_words.Clear();
-
-			_words.Add(new Word("cat", "кот", "kæt"));
-			_words.Add(new Word("dog", "собака", "dɒg"));
-			_words.Add(new Word("chess", "шахматы", "ʧɛs"));
-			_words.Add(new Word("whether", "погода", "ˈwɛðə"));
-		}
+		}*/
 
 		public bool IsFinished => _words.Where(w => w.Ratio != Word.MAX_RATIO).ToList().Count == 0;
 
@@ -103,6 +96,7 @@ namespace WordMaster
 
 			_version = dto.version;
 			_name = dto.name;
+			_time = dto.time;
 			_words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
@@ -117,34 +111,33 @@ namespace WordMaster
 
 			foreach (var w in _words)
 			{
-				string transcription = "[" + w.Transcription + "]";
+				var transcription = "[" + w.Transcription + "]";
 				sb.Append($"{w.Value,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
 			}
 
 			return sb.ToString();
 		}
 
-		public void DeleteWord(Word word)
+		public void RemoveWord(Word word)
 		{
 			_words.Remove(word);
 		}
 
-		public Word GetWordItem(int index)
+		public void RemoveWord(int index)
 		{
-			if (index >= _words.Count)
-				return null;
-
-			return _words[index];
+			_words.RemoveAt(index);
 		}
 
 		public void AddWord(Word word)
 		{
 			_words.Add(word);
 		}
-		
-		public void RemoveWord(int index)
+
+		public void AddDeltaTime(float deltaTime)
 		{
-			_words.RemoveAt(index);
+			_time += deltaTime;
 		}
+
+		public string TimeToString => (new TimeSpan(0, 0, 0, (int)_time)).ToString(@"hh\:mm\:ss");
 	}
 }

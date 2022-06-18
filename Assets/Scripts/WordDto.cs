@@ -8,7 +8,7 @@ namespace WordMaster
 		public string w;
 		public string tsl;
 		public string tcr;
-		public string dcr;
+		public string expl;
 		public int r;
 		public int v;
 
@@ -22,7 +22,7 @@ namespace WordMaster
 			w = word.ValueForDto;
 			tsl = word.TranslationForDto;
 			tcr = word.Transcription;
-			dcr = word.Description;
+			expl = word.Example;
 			r = word.Ratio;
 			v = word.Viewed;
 		}

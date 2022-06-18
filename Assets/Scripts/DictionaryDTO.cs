@@ -7,6 +7,7 @@ namespace WordMaster
 	public class DictionaryDto
 	{
 		public int version;
+		public float time;
 		public string name;
 		public List<WordDto> words;
 
@@ -18,7 +19,8 @@ namespace WordMaster
 		public DictionaryDto(Dictionary dictionary)
 		{
 			version = dictionary.Version;
-			name    = dictionary.Name;
+			time = dictionary.Time;
+			name = dictionary.Name;
 
 			words = new List<WordDto>();
 			dictionary.Words.ForEach(w => words.Add(new WordDto(w)));

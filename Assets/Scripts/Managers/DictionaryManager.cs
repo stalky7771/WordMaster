@@ -17,7 +17,6 @@ namespace WordMaster
 		public Dictionary Dictionary => _dictionary;
 
 		public string Masked { get; private set; }
-		//public string FileName => Application.persistentDataPath + "/dictionary.voc";
 
 		private string _lastEnteredText;
 
@@ -76,9 +75,14 @@ namespace WordMaster
 			_wordViewCounter = 0;
 		}
 
-		public void Update()
+		public override void Update()
 		{
 			InputWord(_lastEnteredText);
+		}
+
+		public override void UpdateByTime()
+		{
+			_dictionary?.AddDeltaTime(Time.deltaTime);
 		}
 
 		public void InputWord(string text, bool isEndEdit = false)
@@ -146,7 +150,7 @@ namespace WordMaster
 
 		public void RemoveCurrentWord()
 		{
-			_dictionary.DeleteWord(CurrentWord);
+			_dictionary.RemoveWord(CurrentWord);
 			CurrentWord = Dictionary.NextWord;
 			OnSetNewWord?.Invoke(CurrentWord);
 			OnPrintDictionary?.Invoke(Dictionary);

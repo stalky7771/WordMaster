@@ -11,5 +11,15 @@
 		{
 
 		}
+
+		public virtual void Update()
+		{
+
+		}
+
+		public virtual void UpdateByTime()
+		{
+
+		}
 	}
 }

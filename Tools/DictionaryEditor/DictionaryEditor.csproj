@@ -68,11 +68,11 @@
     <Compile Include="..\..\Assets\Scripts\Utils\JsonHelper.cs">
       <Link>WordMasterFiles\JsonHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Scripts\WordItem.cs">
-      <Link>WordMasterFiles\WordItem.cs</Link>
+    <Compile Include="..\..\Assets\Scripts\Word.cs">
+      <Link>WordMasterFiles\Word.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Scripts\WordItemDTO.cs">
-      <Link>WordMasterFiles\WordItemDTO.cs</Link>
+    <Compile Include="..\..\Assets\Scripts\WordDto.cs">
+      <Link>WordMasterFiles\WordDto.cs</Link>
     </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="DictionaryManager.cs" />
