@@ -56,23 +56,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Assets\Scripts\Dictionary.cs">
+    <Compile Include="..\..\Assets\Scripts\Models\BaseModel.cs">
+      <Link>WordMasterFiles\BaseModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\Dictionary.cs">
       <Link>WordMasterFiles\Dictionary.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Scripts\DictionaryDTO.cs">
-      <Link>WordMasterFiles\DictionaryDTO.cs</Link>
+    <Compile Include="..\..\Assets\Scripts\Models\DictionaryDto.cs">
+      <Link>WordMasterFiles\DictionaryDto.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\Word.cs">
+      <Link>WordMasterFiles\Word.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\WordDto.cs">
+      <Link>WordMasterFiles\WordDto.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Scripts\Utils\Extentions.cs">
       <Link>WordMasterFiles\Extentions.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Scripts\Utils\JsonHelper.cs">
       <Link>WordMasterFiles\JsonHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Scripts\Word.cs">
-      <Link>WordMasterFiles\Word.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Scripts\WordDto.cs">
-      <Link>WordMasterFiles\WordDto.cs</Link>
     </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="DictionaryManager.cs" />

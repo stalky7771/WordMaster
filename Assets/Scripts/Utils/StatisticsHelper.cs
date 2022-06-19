@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Assets.Scripts.Utils
+namespace WordMaster
 {
 	public class StatisticsHelper
 	{

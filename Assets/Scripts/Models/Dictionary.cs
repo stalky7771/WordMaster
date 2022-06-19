@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace WordMaster
 {
-	public class Dictionary
+	public class Dictionary : BaseModel
 	{
 		private List<Word> _words = new();
 

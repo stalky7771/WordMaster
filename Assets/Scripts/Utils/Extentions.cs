@@ -1,12 +1,15 @@
-﻿public static class StringExtensions
+﻿namespace WordMaster
 {
-	public static string SetColor(this string str, string color)
+	public static class StringExtensions
 	{
-		return string.Format("<color={0}>{1}</color>", color, str);
-	}
+		public static string SetColor(this string str, string color)
+		{
+			return string.Format("<color={0}>{1}</color>", color, str);
+		}
 
-	public static string ToMonoSpace(this string str)
-	{
-		return "<mspace=.6em>" + str + "</mspace >";
+		public static string ToMonoSpace(this string str)
+		{
+			return "<mspace=.6em>" + str + "</mspace >";
+		}
 	}
 }

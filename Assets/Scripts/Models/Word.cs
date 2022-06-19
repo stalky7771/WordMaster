@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WordMaster
 {
-	public class Word
+	public class Word : BaseModel
 	{
 		public enum DataType
 		{

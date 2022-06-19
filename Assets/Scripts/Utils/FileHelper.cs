@@ -2,17 +2,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class FileHelper
+namespace WordMaster
 {
-	public static List<string> GetFiles(string root)
+	public class FileHelper
 	{
-		var result = new List<string>();
-		
-		if (Directory.Exists(root) == false)
+		public static List<string> GetFiles(string root)
 		{
-			return result;
-		}
+			var result = new List<string>();
 
-		return Directory.GetFiles(root, "*.dict").ToList();
+			if (Directory.Exists(root) == false)
+			{
+				return result;
+			}
+
+			return Directory.GetFiles(root, "*.dict").ToList();
+		}
 	}
 }
