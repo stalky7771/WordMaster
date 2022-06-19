@@ -1,19 +1,18 @@
 using System;
-using TMPro;
 using UnityEngine;
 using WordMaster;
 
-public class FpsCounter
+public class FpsManager : BaseManager
 {
 	private double _cached;
 	private int _fpsCached;
 
 	public event Action<string> OnUpdate;
 
-	public void Update()
+	public override void Update()
     {
-		double time = Time.realtimeSinceStartupAsDouble;
-		double delta = time - _cached;
+		var time = Time.realtimeSinceStartupAsDouble;
+		var delta = time - _cached;
 		_cached = time;
 
 		if (delta > 0)

@@ -3,43 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace WordMaster
 {
 	public class Dictionary
 	{
-		private int _version;
-		private string _name;
-		public float _time;
-		private List<Word> _words = new List<Word>();
-		private string _fileName;
+		private List<Word> _words = new();
 
-		public int Version => _version;
-		public float Time => _time;
-		public string Name => _name;
-		public List<Word> Words => _words;
-		public string FileName => _fileName;
+		public int Version { get; private set; }
+		public float Time { get; private set; }
+		public string Name { get; private set; }
+		public string FileName { get; private set; }
 		
-		public Dictionary()
-		{
 
-		}
-
-		/*public Dictionary(DictionaryDto dto)
-		{
-			_version = dto.version;
-			_name = dto.name;
-			_time = dto.time;
-
-			_words = new List<Word>();
-
-			dto.words.ForEach(wordItemDto =>
-			{
-				_words.Add(new Word(wordItemDto));
-			});
-		}*/
+		public List<Word> Words => _words;
 
 		public bool IsFinished => _words.Where(w => w.Ratio != Word.MAX_RATIO).ToList().Count == 0;
 
@@ -68,6 +46,16 @@ namespace WordMaster
 			}
 		}
 
+		public float CompleteRatio
+		{
+			get
+			{
+				float sumRatio = 0;
+				_words.ForEach(w => sumRatio += w.CompleteRatio);
+				return sumRatio / _words.Count;
+			}
+		}
+
 		private Word FindWordWithWorstRatio(float probability)
 		{
 			if (Random.value > probability)
@@ -79,7 +67,7 @@ namespace WordMaster
 
 		public void SaveToJson(string path)
 		{
-			_fileName = path;
+			FileName = path;
 			using var outputFile = new StreamWriter(path);
 			outputFile.Write(JsonHelper.Serialize(new DictionaryDto(this)));
 		}
@@ -89,14 +77,14 @@ namespace WordMaster
 			if (File.Exists(fileName) == false)
 				return;
 
-			_fileName = fileName;
+			FileName = fileName;
 
 			string json = File.ReadAllText(fileName);
 			var dto = JsonHelper.Deserialize(json);
 
-			_version = dto.version;
-			_name = dto.name;
-			_time = dto.time;
+			Version = dto.version;
+			Name = dto.name;
+			Time = dto.time;
 			_words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
@@ -135,9 +123,9 @@ namespace WordMaster
 
 		public void AddDeltaTime(float deltaTime)
 		{
-			_time += deltaTime;
+			Time += deltaTime;
 		}
 
-		public string TimeToString => (new TimeSpan(0, 0, 0, (int)_time)).ToString(@"hh\:mm\:ss");
+		public string TimeToString => (new TimeSpan(0, 0, 0, (int)Time)).ToString(@"hh\:mm\:ss");
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace WordMaster
@@ -21,6 +22,7 @@ namespace WordMaster
 		private string _lastEnteredText;
 
 		public Word CurrentWord { get; private set; }
+		public StatisticsHelper Statistics { get; private set; }
 
 		private int _wordViewCounter;
 
@@ -32,7 +34,9 @@ namespace WordMaster
 
 		public override void InitStart()
 		{
-			Context.Options.OnUpdate += Update;
+			Statistics = new StatisticsHelper();
+
+			Context.Options.OnUpdate += UpdateWordChecker;
 
 			var fileName = Context.Options.DictionaryFileName;
 
@@ -51,6 +55,8 @@ namespace WordMaster
 
 		public void LoadFromJson(string fileName)
 		{
+			Statistics.Clear();
+			
 			_dictionary.LoadFromJson(fileName);
 			Context.Options.DictionaryFileName = fileName;
 			OnPrintDictionary?.Invoke(_dictionary);
@@ -75,12 +81,12 @@ namespace WordMaster
 			_wordViewCounter = 0;
 		}
 
-		public override void Update()
+		private void UpdateWordChecker()
 		{
 			InputWord(_lastEnteredText);
 		}
 
-		public override void UpdateByTime()
+		public override void Update()
 		{
 			_dictionary?.AddDeltaTime(Time.deltaTime);
 		}
@@ -110,6 +116,7 @@ namespace WordMaster
 
 				if (CurrentWord.IsFullTranslation(text, isReversed))
 				{
+					Statistics.IncrementCorrectAnswer();
 					CurrentWord.AnswerCorrect();
 					OnWordFinished?.Invoke(CurrentWord);
 					CurrentWord = Dictionary.NextWord;
@@ -142,6 +149,7 @@ namespace WordMaster
 					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
 
 				CurrentWord.AnswerWrong();
+				Statistics.IncrementWrongAnswer();
 			}
 
 			OnPrintDictionary?.Invoke(Dictionary);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
 
 namespace WordMaster
@@ -19,7 +18,6 @@ namespace WordMaster
 		private string _value;
 		private string _translation;
 		private int _ratio;
-		private int _viewed;
 
 		public string Value => IsReversed ? _translation : _value;
 		public string Translation => IsReversed ? _value : _translation;
@@ -47,15 +45,19 @@ namespace WordMaster
 			set => _ratio = Mathf.Clamp(value, MIN_RATIO, MAX_RATIO);
 		}
 
+		public float CompleteRatio
+		{
+			get
+			{
+				var tmp = Mathf.Clamp(_ratio, 0, MAX_RATIO);
+				return tmp / (float)(MAX_RATIO);
+			}
+		}
+
 		public static bool IsReversed { get; set; }
 		public static bool ShowWordLength { get; set; }
 		public static bool ShowFirstLetter { get; set; }
-
-		public int Viewed
-		{
-			get => _viewed;
-			private set => _viewed = value;
-		}
+		public int Viewed { get; private set; }
 
 		public void SetData(DataType type, string str)
 		{
@@ -83,7 +85,7 @@ namespace WordMaster
 			Example = dto.expl;
 
 			_ratio = dto.r;
-			_viewed = dto.v;
+			Viewed = dto.v;
 		}
 
 		public void Update(Word other)
@@ -94,10 +96,10 @@ namespace WordMaster
 			Example = other.Example;
 		}
 
-		private string GetString(string[] data, int index)
+		/*private string GetString(string[] data, int index)
 		{
 			return index < data.Length ? data[index] : string.Empty;
-		}
+		}*/
 
 		public void AnswerCorrect()
 		{
@@ -169,7 +171,7 @@ namespace WordMaster
 				textForCheck = _translation.Substring(0, 1);
 			}
 
-			for (int i = 0; i < longText.Length; i++)
+			for (var i = 0; i < longText.Length; i++)
 			{
 				if (i < textForCheck.Length)
 				{

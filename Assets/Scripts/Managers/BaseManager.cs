@@ -16,10 +16,5 @@
 		{
 
 		}
-
-		public virtual void UpdateByTime()
-		{
-
-		}
 	}
 }

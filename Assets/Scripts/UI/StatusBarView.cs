@@ -19,7 +19,7 @@ public class StatusBarView : MonoBehaviour
 		LeftText = string.Empty;
 
 		Context.DictionaryManager.OnWordFinished += OnWordFinished;
-		Context.FpsCounter.OnUpdate += OnUpdateFps;
+		Context.FpsManager.OnUpdate += OnUpdateFps;
 
 		Version = Context.Version.Ver;
 	}
