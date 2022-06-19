@@ -15,22 +15,9 @@ namespace WordMasterEditor
 
 		public void Load(string filePath)
 		{
-			try
-			{
-				using (var sr = new StreamReader(filePath))
-				{
-					string json = sr.ReadToEnd();
-					Dictionary = new Dictionary(JsonHelper.Deserialize(json));
-					FilePath = filePath;
-					OnUpdateStatusBar?.Invoke(FilePath);
-				}
-			}
-			catch (IOException exc)
-			{
-				//Console.WriteLine("The file could not be read:");
-				//Console.WriteLine(exc.Message);
-			}
-
+			Dictionary = new Dictionary();
+			Dictionary.LoadFromJson(filePath);
+			OnUpdateStatusBar?.Invoke(FilePath);
 			UpdateView();
 		}
 

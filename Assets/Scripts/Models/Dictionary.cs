@@ -46,13 +46,13 @@ namespace WordMaster
 			}
 		}
 
-		public float CompleteRatio
+		public float Progress
 		{
 			get
 			{
-				float sumRatio = 0;
-				_words.ForEach(w => sumRatio += w.CompleteRatio);
-				return sumRatio / _words.Count;
+				float sum = 0;
+				_words.ForEach(w => sum += w.CompleteRatio);
+				return sum / _words.Count;
 			}
 		}
 
@@ -104,6 +104,11 @@ namespace WordMaster
 			}
 
 			return sb.ToString();
+		}
+
+		public Word GetWordItem(int index)
+		{
+			return index >= _words.Count ? null : _words[index];
 		}
 
 		public void RemoveWord(Word word)

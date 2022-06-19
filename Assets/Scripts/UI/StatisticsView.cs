@@ -9,17 +9,17 @@ public class StatisticsView : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _textProgress;
 	[SerializeField] private TextMeshProUGUI _textCommonInfo;
 
-	private void Start()
+	private void Awake()
 	{
-		Context.DictionaryManager.OnSetNewWord += OnSetNewWord;
+		Context.DictionaryManager.OnUpdateUi += OnUpdateUi;
 	}
 
-	private void OnSetNewWord(Word obj)
+	private void OnUpdateUi()
 	{
 		if (Context.DictionaryManager.Dictionary == null)
 			return;
 
-		var rate = Context.DictionaryManager.Dictionary.CompleteRatio;
+		var rate = Context.DictionaryManager.Dictionary.Progress;
 		_image.fillAmount = rate;
 		_textProgress.text = rate.ToString("0.000") + "%";
 

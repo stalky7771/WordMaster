@@ -77,6 +77,7 @@ namespace WordMaster
 
 			InputWord(string.Empty);
 			OnSetNewWord?.Invoke(CurrentWord);
+			OnUpdateUi?.Invoke();
 
 			_wordViewCounter = 0;
 		}
@@ -138,6 +139,7 @@ namespace WordMaster
 					}
 
 					OnSetNewWord?.Invoke(CurrentWord);
+					OnUpdateUi?.Invoke();
 					return;
 				}
 			}

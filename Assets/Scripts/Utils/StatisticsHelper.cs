@@ -19,11 +19,21 @@ namespace Assets.Scripts.Utils
 
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Correct: ");
-			sb.Append(CorrectAnswer.ToString().SetColor("green"));
-			sb.Append(", Wrong: ");
-			sb.Append(WrongAnswer.ToString().SetColor("red"));
+			var sb = new StringBuilder();
+			
+			if (CorrectAnswer > 0)
+			{
+				sb.Append("Correct: ");
+				sb.Append(CorrectAnswer.ToString().SetColor("green"));
+				sb.Append(", ");
+			}
+
+			if (WrongAnswer > 0)
+			{
+				sb.Append("Wrong: ");
+				sb.Append(WrongAnswer.ToString().SetColor("red"));
+			}
+
 			return sb.ToString();
 		}
 

@@ -8,18 +8,24 @@ namespace WordMaster
 		public static DictionaryManager DictionaryManager { get; private set; }
 		public static Options Options { get; private set; }
 		public static FpsManager FpsManager { get; private set; }
-		public static Version Version { get; private set; }
+		public static GameManager GameManager { get; private set; }
+
 		public static MainView View { get; private set; }
 
-		private readonly List<BaseManager> _managers = new List<BaseManager>();
+		private readonly List<BaseManager> _managers = new();
+		private readonly List<BaseManager> _managersUpdate = new();
 
 		private void Init()
 		{
 			Application.targetFrameRate = 45;
 			Options = new Options();
-			Version = new Version();
+
+			_managers.Add(GameManager = new GameManager());
 			_managers.Add(DictionaryManager = new DictionaryManager());
 			_managers.Add(FpsManager = new FpsManager());
+
+			_managersUpdate.Add(DictionaryManager);
+			_managersUpdate.Add(FpsManager);
 		}
 
 		private void Awake()
@@ -35,7 +41,7 @@ namespace WordMaster
 
 		private void Update()
 		{
-			_managers.ForEach(m => m.Update());
+			_managersUpdate.ForEach(m => m.Update());
 		}
 
 		public static void SetView(MainView view)

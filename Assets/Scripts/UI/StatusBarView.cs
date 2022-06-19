@@ -21,7 +21,7 @@ public class StatusBarView : MonoBehaviour
 		Context.DictionaryManager.OnWordFinished += OnWordFinished;
 		Context.FpsManager.OnUpdate += OnUpdateFps;
 
-		Version = Context.Version.Ver;
+		Version = Context.GameManager.Ver;
 	}
 
 	private void Update()
