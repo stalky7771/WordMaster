@@ -13,6 +13,8 @@ public class WordCheckingView : MonoBehaviour
 	[SerializeField] private GameObject _checkPanel;
 	[SerializeField] private GameObject _dictFinishedPanel;
 
+	[SerializeField] private WordStatisticsView _wordStatisticsView;
+
 	public string Translation
 	{
 		set => _textTranslation.text = value;
@@ -102,6 +104,7 @@ public class WordCheckingView : MonoBehaviour
 		Translation = Context.DictionaryManager.CurrentWord.Translation;
 		Masked = Context.DictionaryManager.Masked;
 		Description = Context.DictionaryManager.CurrentWord.DescriptionWithCensure;
+		_wordStatisticsView.Progress = Context.DictionaryManager.CurrentWord.Ratio;
 	}
 
 	private void OnSetNewWord(Word word)
@@ -110,6 +113,7 @@ public class WordCheckingView : MonoBehaviour
 		Translation = word.Translation;
 		Description = word.DescriptionWithCensure;
 		Masked = Context.DictionaryManager.Masked;
+		_wordStatisticsView.Progress = Context.DictionaryManager.CurrentWord.Ratio;
 	}
 
 	private void OnPrintDictionary(Dictionary dictionary)

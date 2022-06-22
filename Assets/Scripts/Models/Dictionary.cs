@@ -9,19 +9,15 @@ namespace WordMaster
 {
 	public class Dictionary : BaseModel
 	{
-		private List<Word> _words = new();
-
-		public int Version { get; private set; }
-		public float Time { get; private set; }
-		public string Name { get; private set; }
 		public string FileName { get; private set; }
-		
 
-		public List<Word> Words => _words;
+		public List<Word> Words { get; private set; } = new();
 
-		public bool IsFinished => _words.Where(w => w.Ratio != Word.MAX_RATIO).ToList().Count == 0;
+		public DictionaryStatistics Statistics { get; private set; }
 
-		public bool IsEmpty => _words.Count == 0;
+		public bool IsFinished => Words.Where(w => w.Ratio != Word.MAX_RATIO).ToList().Count == 0;
+
+		public bool IsEmpty => Words.Count == 0;
 
 		public Word NextWord
 		{
@@ -36,7 +32,7 @@ namespace WordMaster
 				if (worstWord != null)
 					return worstWord;
 
-				var availableWords = _words.Where(w => w.Ratio < Word.MAX_RATIO).OrderBy(w => w.Viewed).ToList();
+				var availableWords = Words.Where(w => w.Ratio < Word.MAX_RATIO).OrderBy(w => w.Viewed).ToList();
 
 				var wordWithMinVied = availableWords[0];
 
@@ -51,8 +47,18 @@ namespace WordMaster
 			get
 			{
 				float sum = 0;
-				_words.ForEach(w => sum += w.CompleteRatio);
-				return sum / _words.Count;
+				Words.ForEach(w => sum += w.CompleteRatio);
+				return sum / Words.Count;
+			}
+		}
+
+		public string FinishedWordsAmount
+		{
+			get
+			{
+				var finishedWordsAmount = Words.Where(w => w.Ratio == Word.MAX_RATIO).ToList().Count;
+				var allWordsAmount = Words.Count;
+				return $"Finished: {finishedWordsAmount}/{allWordsAmount}";
 			}
 		}
 
@@ -61,8 +67,8 @@ namespace WordMaster
 			if (Random.value > probability)
 				return null;
 
-			int minRatio = _words.Min(w => w.Ratio);
-			return _words.Find(w => w.Ratio == minRatio);
+			var minRatio = Words.Min(w => w.Ratio);
+			return Words.Find(w => w.Ratio == minRatio);
 		}
 
 		public void SaveToJson(string path)
@@ -79,25 +85,24 @@ namespace WordMaster
 
 			FileName = fileName;
 
-			string json = File.ReadAllText(fileName);
+			var json = File.ReadAllText(fileName);
 			var dto = JsonHelper.Deserialize(json);
 
-			Version = dto.version;
-			Name = dto.name;
-			Time = dto.time;
-			_words = new List<Word>();
+			Words = new List<Word>();
 
 			dto.words.ForEach(wordItemDto =>
 			{
-				_words.Add(new Word(wordItemDto));
+				Words.Add(new Word(wordItemDto));
 			});
+
+			Statistics = new DictionaryStatistics(dto.statisticsDto, this);
 		}
 
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
 
-			foreach (var w in _words)
+			foreach (var w in Words)
 			{
 				var transcription = "[" + w.Transcription + "]";
 				sb.Append($"{w.Value,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
@@ -108,29 +113,29 @@ namespace WordMaster
 
 		public Word GetWordItem(int index)
 		{
-			return index >= _words.Count ? null : _words[index];
+			return index >= Words.Count ? null : Words[index];
 		}
 
 		public void RemoveWord(Word word)
 		{
-			_words.Remove(word);
+			Words.Remove(word);
 		}
 
 		public void RemoveWord(int index)
 		{
-			_words.RemoveAt(index);
+			Words.RemoveAt(index);
 		}
 
 		public void AddWord(Word word)
 		{
-			_words.Add(word);
+			Words.Add(word);
 		}
 
 		public void AddDeltaTime(float deltaTime)
 		{
-			Time += deltaTime;
+			Statistics.AddDeltaTime(deltaTime);
 		}
 
-		public string TimeToString => (new TimeSpan(0, 0, 0, (int)Time)).ToString(@"hh\:mm\:ss");
+		public string TimeToString => (new TimeSpan(0, 0, 0, (int)Statistics.Time)).ToString(@"hh\:mm\:ss");
 	}
 }

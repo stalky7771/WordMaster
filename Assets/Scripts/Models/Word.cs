@@ -14,7 +14,7 @@ namespace WordMaster
 		}
 
 		public const int MIN_RATIO = -5;
-		public const int MAX_RATIO = 7;
+		public const int MAX_RATIO = 5;
 		private string _value;
 		private string _translation;
 		private int _ratio;
@@ -75,6 +75,12 @@ namespace WordMaster
 		public Word()
 		{
 
+		}
+
+		public Word(string value, string translation)
+		{
+			_value = value;
+			_translation = translation;
 		}
 
 		public Word(WordDto dto)

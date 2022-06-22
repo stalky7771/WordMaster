@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WordMaster;
 
 namespace WordMasterEditor
@@ -54,34 +56,36 @@ namespace WordMasterEditor
 				OnShowDictionary?.Invoke(Dictionary);
 		}
 
-		public void ConvertDictionary()
+		public void ConvertCSVtoDictionary(string fileName)
 		{
-			/*string fileIn = @"D:\_RESEARCH\UNITY\L15b.txt";
-			string fileOut = @"D:\_RESEARCH\UNITY\L15.dict";
+			
+			var fileIn = fileName;
+			var fileOut = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileIn) + ".dict";
 
 			using (var sr = new StreamReader(fileIn))
 			{
-				Dictionary newDictionary = new Dictionary();
+				var newDictionary = new Dictionary();
 
-				string text = sr.ReadToEnd();
-				string[] lines = text.Split('\n');
-				List<string> words = lines.ToList();
-				for (int i = 0; i < words.Count; i++)
+				var text = sr.ReadToEnd();
+				var lines = text.Split('\n');
+				var words = lines.ToList();
+				foreach (var t in words)
 				{
-					string w = words[i];
-					w.Replace("\r", "");
+					var w = t;
+					w = w.Replace("\r", "");
 					w = w.Trim();
-					string[] wordPair = w.Split(';');
 
-					Word wordItem = new Word(wordPair[0], wordPair[1]);
+					if (string.IsNullOrEmpty(w))
+						break;
+
+					var wordPair = w.Split(';');
+
+					var wordItem = new Word(wordPair[0], wordPair[1]);
 					newDictionary.AddWord(wordItem);
 				}
 
 				newDictionary.SaveToJson(fileOut);
-
-
-				int aaa = 0;
-			}*/
+			}
 		}
 	}
 }

@@ -50,6 +50,7 @@
 			this.tbTranskription = new System.Windows.Forms.TextBox();
 			this.tbTranslate = new System.Windows.Forms.TextBox();
 			this.tbWord = new System.Windows.Forms.TextBox();
+			this.cSVToDictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -72,7 +73,8 @@
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
-            this.saveToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.cSVToDictToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -136,7 +138,6 @@
 			// openFileDialog
 			// 
 			this.openFileDialog.FileName = "openFileDialog";
-			this.openFileDialog.Filter = "Dictionaries|*.dict";
 			// 
 			// listViewWords
 			// 
@@ -234,6 +235,13 @@
 			this.tbWord.TabIndex = 0;
 			this.tbWord.Text = "Word";
 			// 
+			// cSVToDictToolStripMenuItem
+			// 
+			this.cSVToDictToolStripMenuItem.Name = "cSVToDictToolStripMenuItem";
+			this.cSVToDictToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.cSVToDictToolStripMenuItem.Text = "CSV to Dict";
+			this.cSVToDictToolStripMenuItem.Click += new System.EventHandler(this.cSVToDictToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,6 +291,7 @@
 		private System.Windows.Forms.ToolStripMenuItem upToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 		private System.Windows.Forms.ColumnHeader chExample;
+		private System.Windows.Forms.ToolStripMenuItem cSVToDictToolStripMenuItem;
 	}
 }
 

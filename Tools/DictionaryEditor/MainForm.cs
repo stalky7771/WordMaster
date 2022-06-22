@@ -179,5 +179,13 @@ namespace WordMasterEditor
 			e.NewWidth = this.listViewWords.Columns[e.ColumnIndex].Width;
 			e.Cancel = true;
 		}
+
+		private void cSVToDictToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+				return;
+
+			DictionaryManager.ConvertCSVtoDictionary(openFileDialog.FileName);
+		}
 	}
 }

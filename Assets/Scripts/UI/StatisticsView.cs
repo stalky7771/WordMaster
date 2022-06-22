@@ -21,8 +21,8 @@ public class StatisticsView : MonoBehaviour
 
 		var rate = Context.DictionaryManager.Dictionary.Progress;
 		_image.fillAmount = rate;
-		_textProgress.text = rate.ToString("0.000") + "%";
+		_textProgress.text = rate.ToString("P1");
 
-		_textCommonInfo.text = Context.DictionaryManager.Statistics.ToString();
+		_textCommonInfo.text = Context.DictionaryManager.Dictionary.Statistics.ToString();
 	}
 }

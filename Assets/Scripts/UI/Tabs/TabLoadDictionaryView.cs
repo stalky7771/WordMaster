@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using WordMaster;
 
@@ -26,21 +27,23 @@ public class TabLoadDictionaryView : MonoBehaviour
 		AddItems(files);
 	}
 
-	public void AddItems(List<string> fileNames)
+	public void AddItems(List<string> filePath)
 	{
 		Clear();
 
 		var counter = 0;
-		fileNames.ForEach(fileName =>
+		filePath.ForEach(path =>
 		{
-			var item = Object.Instantiate(_template).GetComponent<FilePathItem>();
+			var item = Instantiate(_template).GetComponent<FilePathItem>();
 			item.transform.SetParent(_root);
 			item.gameObject.name = $"item{counter++}";
 			item.gameObject.SetActive(true);
 
+			var fileName = Path.GetFileNameWithoutExtension(path);
+
 			item.Init(fileName, "", () =>
 			{
-				Context.DictionaryManager.LoadFromJson(fileName);
+				Context.DictionaryManager.LoadFromJson(path);
 				_tabHolderView.OnShowCheckWords();
 			});
 		});
