@@ -5,9 +5,7 @@ using WordMaster;
 
 public class StatisticsView : MonoBehaviour
 {
-	[SerializeField] private Image _image;
-	[SerializeField] private TextMeshProUGUI _textProgress;
-	[SerializeField] private TextMeshProUGUI _textCommonInfo;
+	[SerializeField] private TextMeshProUGUI _textInfo;
 
 	private void Awake()
 	{
@@ -19,10 +17,6 @@ public class StatisticsView : MonoBehaviour
 		if (Context.DictionaryManager.Dictionary == null)
 			return;
 
-		var rate = Context.DictionaryManager.Dictionary.Progress;
-		_image.fillAmount = rate;
-		_textProgress.text = rate.ToString("P1");
-
-		_textCommonInfo.text = Context.DictionaryManager.Dictionary.Statistics.ToString();
+		_textInfo.text = Context.DictionaryManager.Dictionary.Statistics.ToString();
 	}
 }

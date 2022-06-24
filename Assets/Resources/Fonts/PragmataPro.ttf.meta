@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2763fb4e5f9f38a469e5ee033b66a60e
+guid: 87cf1227a71d387448f50004e98394b1
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - InconsolataCyr
+  - PragmataPro
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

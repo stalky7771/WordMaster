@@ -75,7 +75,10 @@ namespace WordMaster
 			if (Dictionary != null)
 			{
 				sb.Append(", ");
-				sb.Append(Dictionary.FinishedWordsAmount);
+				sb.Append(Dictionary.FinishedWords);
+
+				sb.Append(", ");
+				sb.Append(Dictionary.Progress);
 			}
 
 			return sb.ToString();

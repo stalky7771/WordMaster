@@ -42,23 +42,23 @@ namespace WordMaster
 			}
 		}
 
-		public float Progress
+		public string Progress
 		{
 			get
 			{
 				float sum = 0;
 				Words.ForEach(w => sum += w.CompleteRatio);
-				return sum / Words.Count;
+				return "Progress: " + (sum / Words.Count).ToString("P1");
 			}
 		}
 
-		public string FinishedWordsAmount
+		public string FinishedWords
 		{
 			get
 			{
-				var finishedWordsAmount = Words.Where(w => w.Ratio == Word.MAX_RATIO).ToList().Count;
-				var allWordsAmount = Words.Count;
-				return $"Finished: {finishedWordsAmount}/{allWordsAmount}";
+				var finishedWords = Words.Where(w => w.Ratio == Word.MAX_RATIO).ToList().Count;
+				var allWords = Words.Count;
+				return $"Finished: {finishedWords}/{allWords}";
 			}
 		}
 
@@ -104,8 +104,8 @@ namespace WordMaster
 
 			foreach (var w in Words)
 			{
-				var transcription = "[" + w.Transcription + "]";
-				sb.Append($"{w.Value,-12} {w.Translation,-12} {w.Ratio,-3} {transcription,-12}\n");
+				//var transcription = "[" + w.Transcription + "]";
+				sb.AppendLine($"{w.Value,-32} {w.Translation,-32} {w.Ratio,2}"); // {transcription,-20}\n");
 			}
 
 			return sb.ToString();
