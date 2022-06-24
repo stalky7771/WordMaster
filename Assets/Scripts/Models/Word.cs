@@ -161,11 +161,11 @@ namespace WordMaster
 			return true;
 		}
 
-		public string GetMaskedText(string textForCheck, bool isReverse)
+		public string GetMaskedText(string textForCheck, bool isReverse, bool isAsterisk = true)
 		{
-			string longText = isReverse ? _translation : _value;
+			var fullText = isReverse ? _translation : _value;
 
-			string result = string.Empty;
+			var result = string.Empty;
 
 			if (ShowWordLength == false)
 			{
@@ -177,15 +177,17 @@ namespace WordMaster
 				textForCheck = _translation.Substring(0, 1);
 			}
 
-			for (var i = 0; i < longText.Length; i++)
+			for (var i = 0; i < fullText.Length; i++)
 			{
 				if (i < textForCheck.Length)
 				{
-					result += longText[i];
+					result += " ";//fullText[i];
 					continue;
 				}
-
-				result += longText[i] != ' ' ? "*" : " ";
+				if (isAsterisk)
+					result += fullText[i] != ' ' ? "*" : " ";
+				else
+					result += fullText[i];
 			}
 
 			return result;

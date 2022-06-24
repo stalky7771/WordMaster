@@ -88,16 +88,17 @@ namespace WordMaster
 			_dictionary?.AddDeltaTime(Time.deltaTime);
 		}
 
-		public void InputWord(string text, bool isEndEdit = false)
+		public bool InputWord(string text, bool isEndEdit = false)
 		{
 			var isReversed = Context.Options.IsReversed;
+			var result = false;
 
 			_lastEnteredText = text;
 
 			if (CurrentWord == null)
 			{
 				OnDictionaryFinished?.Invoke();
-				return;
+				return false;
 			}
 
 			var isCorrectWord = CurrentWord.IsCorrectTranslation(text, isReversed);
@@ -131,19 +132,25 @@ namespace WordMaster
 					if (CurrentWord == null)
 					{
 						OnDictionaryFinished?.Invoke();
-						return;
+						return result;
 					}
 
 					OnSetNewWord?.Invoke(CurrentWord);
 					OnUpdateUi?.Invoke();
-					return;
+					return result;
 				}
 			}
 			else
 			{
-				var phrase = CurrentWord.Value;
+				if (isEndEdit == false)
+				{
+					text = text.Remove(text.Length - 1);
+					result = true;
+				}
+
+				//var phrase = CurrentWord.Value;
 				Masked = Context.Options.ShowCorrectWord || isEndEdit
-					? phrase.SetColor("red")
+					? CurrentWord.GetMaskedText(text, isReversed, false).SetColor("red") //phrase.SetColor("red")
 					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
 
 				CurrentWord.AnswerWrong();
@@ -152,6 +159,8 @@ namespace WordMaster
 
 			OnPrintDictionary?.Invoke(Dictionary);
 			OnUpdateUi?.Invoke();
+
+			return result;
 		}
 
 		public void RemoveCurrentWord()

@@ -15,6 +15,8 @@ public class WordCheckingView : MonoBehaviour
 
 	[SerializeField] private WordStatisticsView _wordStatisticsView;
 
+	private DictionaryManager DictManager => Context.DictionaryManager;
+
 	public string Translation
 	{
 		set => _textTranslation.text = value;
@@ -32,10 +34,10 @@ public class WordCheckingView : MonoBehaviour
 
 	private void Start()
 	{
-		Context.DictionaryManager.OnUpdateUi += OnUpdateUI;
-		Context.DictionaryManager.OnSetNewWord += OnSetNewWord;
-		Context.DictionaryManager.OnPrintDictionary += OnPrintDictionary;
-		Context.DictionaryManager.OnDictionaryFinished += OnDictionaryFinished;
+		DictManager.OnUpdateUi += OnUpdateUI;
+		DictManager.OnSetNewWord += OnSetNewWord;
+		DictManager.OnPrintDictionary += OnPrintDictionary;
+		DictManager.OnDictionaryFinished += OnDictionaryFinished;
 	}
 
 	private void Update()
@@ -86,8 +88,15 @@ public class WordCheckingView : MonoBehaviour
 	}
 
 	private bool _isEndEdit;
+	private bool _isIgnoreNextOnValueChange;
 	public void OnValueChanged(string text)
 	{
+		if (_isIgnoreNextOnValueChange)
+		{
+			_isIgnoreNextOnValueChange = false;
+			return;
+		}
+
 		if (text.EndsWith("\n"))
 		{
 			_isEndEdit = true;
@@ -95,16 +104,21 @@ public class WordCheckingView : MonoBehaviour
 			return;
 		}
 
-		Context.DictionaryManager.InputWord(text, _isEndEdit);
+		var isLastSymbolWrong = DictManager.InputWord(text, _isEndEdit);
+		if (isLastSymbolWrong)
+		{
+			_isIgnoreNextOnValueChange = true;
+			_inputField.text = text.Remove(text.Length - 1);
+		}
 		_isEndEdit = false;
 	}
 
 	private void OnUpdateUI()
 	{
-		Translation = Context.DictionaryManager.CurrentWord.Translation;
-		Masked = Context.DictionaryManager.Masked;
-		Description = Context.DictionaryManager.CurrentWord.DescriptionWithCensure;
-		_wordStatisticsView.Progress = Context.DictionaryManager.CurrentWord.Ratio;
+		Translation = DictManager.CurrentWord.Translation;
+		Masked = DictManager.Masked;
+		Description = DictManager.CurrentWord.DescriptionWithCensure;
+		_wordStatisticsView.Progress = DictManager.CurrentWord.Ratio;
 	}
 
 	private void OnSetNewWord(Word word)
@@ -112,8 +126,8 @@ public class WordCheckingView : MonoBehaviour
 		_inputField.text = string.Empty;
 		Translation = word.Translation;
 		Description = word.DescriptionWithCensure;
-		Masked = Context.DictionaryManager.Masked;
-		_wordStatisticsView.Progress = Context.DictionaryManager.CurrentWord.Ratio;
+		Masked = DictManager.Masked;
+		_wordStatisticsView.Progress = DictManager.CurrentWord.Ratio;
 	}
 
 	private void OnPrintDictionary(Dictionary dictionary)

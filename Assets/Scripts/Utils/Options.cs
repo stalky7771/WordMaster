@@ -49,6 +49,7 @@ namespace WordMaster
 			get => GetBool(SHOW_CORRECT_WORD);
 			set
 			{
+				Debug.LogError(">>> ShowCorrectWord = " + value);
 				SetBool(SHOW_CORRECT_WORD, value);
 				OnUpdate?.Invoke();
 			}
