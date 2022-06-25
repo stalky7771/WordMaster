@@ -65,6 +65,12 @@
     <Compile Include="..\..\Assets\Scripts\Models\DictionaryDto.cs">
       <Link>WordMasterFiles\DictionaryDto.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\DictionaryStatistics.cs">
+      <Link>WordMasterFiles\DictionaryStatistics.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\DictionaryStatisticsDto.cs">
+      <Link>WordMasterFiles\DictionaryStatisticsDto.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Scripts\Models\Word.cs">
       <Link>WordMasterFiles\Word.cs</Link>
     </Compile>

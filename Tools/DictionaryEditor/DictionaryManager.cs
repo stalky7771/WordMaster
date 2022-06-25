@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WordMaster;
@@ -80,7 +79,14 @@ namespace WordMasterEditor
 
 					var wordPair = w.Split(';');
 
-					var wordItem = new Word(wordPair[0], wordPair[1]);
+					var word = wordPair[0];
+					var translate = wordPair[1];
+					var example = string.Empty;
+
+					if (wordPair.Length > 2)
+						example = wordPair[2];
+
+					var wordItem = new Word(word, translate, example);
 					newDictionary.AddWord(wordItem);
 				}
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Random = UnityEngine.Random;
@@ -62,6 +61,25 @@ namespace WordMaster
 			}
 		}
 
+		public Dictionary()
+		{
+
+		}
+
+		public Dictionary(DictionaryDto dto, string fileName)
+		{
+			FileName = fileName;
+
+			Words = new List<Word>();
+
+			dto?.words.ForEach(wordItemDto =>
+			{
+				Words.Add(new Word(wordItemDto));
+			});
+
+			Statistics = new DictionaryStatistics(dto?.statisticsDto, this);
+		}
+
 		private Word FindWordWithWorstRatio(float probability)
 		{
 			if (Random.value > probability)
@@ -71,14 +89,14 @@ namespace WordMaster
 			return Words.Find(w => w.Ratio == minRatio);
 		}
 
-		public void SaveToJson(string path)
+		/*public void SaveToJson(string path)
 		{
 			FileName = path;
 			using var outputFile = new StreamWriter(path);
 			outputFile.Write(JsonHelper.Serialize(new DictionaryDto(this)));
-		}
+		}*/
 
-		public void LoadFromJson(string fileName)
+		/*public void LoadFromJson(string fileName)
 		{
 			if (File.Exists(fileName) == false)
 				return;
@@ -96,7 +114,7 @@ namespace WordMaster
 			});
 
 			Statistics = new DictionaryStatistics(dto.statisticsDto, this);
-		}
+		}*/
 
 		public override string ToString()
 		{

@@ -19,7 +19,10 @@ namespace WordMaster
 			words = new List<WordDto>();
 			dictionary.Words.ForEach(w => words.Add(new WordDto(w)));
 
-			statisticsDto = dictionary.Statistics.GetDto();
+
+			statisticsDto = dictionary.Statistics != null
+				? dictionary.Statistics.GetDto()
+				: new DictionaryStatisticsDto();
 		}
 	}
 }

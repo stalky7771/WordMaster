@@ -7,8 +7,8 @@ namespace WordMaster
 	public class DictionaryManager : BaseManager
 	{
 		public event Action OnUpdateUi;
-		public event Action OnDictionaryFinished;
 		public event Action OnSaveDictionary;
+		public event Action<bool> OnDictionaryFinished;
 		public event Action<Word> OnSetNewWord;
 		public event Action<Word> OnWordFinished;
 		public event Action<Dictionary> OnPrintDictionary;
@@ -44,30 +44,31 @@ namespace WordMaster
 
 		public void SaveToJson()
 		{
-			string json = JsonUtility.ToJson(new DictionaryDto(_dictionary), true);
-			File.WriteAllText(_dictionary.FileName, json);
-			_wordViewCounter = 0;
+			PersistenceHelper.SaveToJson(_dictionary.FileName, new DictionaryDto(_dictionary));
 		}
 
 		public void LoadFromJson(string fileName)
 		{
-			_dictionary.LoadFromJson(fileName);
-			_dictionary.Statistics.Clear();
+			var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(fileName);
+
+			_dictionary = new Dictionary(dto, fileName);
 
 			Context.Options.DictionaryFileName = fileName;
 			OnPrintDictionary?.Invoke(_dictionary);
 
 			if (_dictionary.IsEmpty)
 			{
-				OnDictionaryFinished?.Invoke();
+				OnDictionaryFinished?.Invoke(true);
 				return;
 			}
+
+			OnDictionaryFinished?.Invoke(false);
 
 			CurrentWord = Dictionary.NextWord;
 
 			if (CurrentWord == null)
 			{
-				OnDictionaryFinished?.Invoke();
+				OnDictionaryFinished?.Invoke(true);
 				return;
 			}
 
@@ -97,7 +98,7 @@ namespace WordMaster
 
 			if (CurrentWord == null)
 			{
-				OnDictionaryFinished?.Invoke();
+				OnDictionaryFinished?.Invoke(true);
 				return false;
 			}
 
@@ -131,7 +132,7 @@ namespace WordMaster
 
 					if (CurrentWord == null)
 					{
-						OnDictionaryFinished?.Invoke();
+						OnDictionaryFinished?.Invoke(true);
 						return result;
 					}
 

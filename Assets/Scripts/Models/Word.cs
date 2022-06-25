@@ -83,6 +83,13 @@ namespace WordMaster
 			_translation = translation;
 		}
 
+		public Word(string value, string translation, string example)
+		{
+			_value = value;
+			_translation = translation;
+			Example = example;
+		}
+
 		public Word(WordDto dto)
 		{
 			_value = dto.w;

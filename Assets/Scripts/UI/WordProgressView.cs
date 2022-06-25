@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using WordMaster;
 
-public class WordStatisticsView : MonoBehaviour
+public class WordProgressView : MonoBehaviour
 {
 	[SerializeField] private Image _imageGreen;
 	[SerializeField] private Image _imageRed;
