@@ -6,9 +6,9 @@ namespace WordMaster
 	public class Context : MonoBehaviour
 	{
 		public static DictionaryManager DictionaryManager { get; private set; }
-		public static Options Options { get; private set; }
 		public static FpsManager FpsManager { get; private set; }
 		public static GameManager GameManager { get; private set; }
+		public static ConfigurationManager Config { get; private set; }
 
 		public static MainView View { get; private set; }
 
@@ -18,11 +18,11 @@ namespace WordMaster
 		private void Init()
 		{
 			Application.targetFrameRate = 45;
-			Options = new Options();
 
 			_managers.Add(GameManager = new GameManager());
 			_managers.Add(DictionaryManager = new DictionaryManager());
 			_managers.Add(FpsManager = new FpsManager());
+			_managers.Add(Config = new ConfigurationManager());
 
 			_managersUpdate.Add(DictionaryManager);
 			_managersUpdate.Add(FpsManager);

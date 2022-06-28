@@ -6,22 +6,25 @@ namespace WordMaster
 {
 	public class PersistenceHelper
 	{
-		public static void SaveToJson(string fileName, object dto)
+		public static string SaveToJson(object dto)
 		{
-			var json = JsonUtility.ToJson(dto, true);
-			File.WriteAllText(fileName, json);
+			return JsonUtility.ToJson(dto, true);
+        }
+
+        public static void WriteToFile(string fileName, string text)
+        {
+            File.WriteAllText(fileName, text);
 		}
 
-		public static T LoadFromJson<T>(string fileName) where T : class 
+		public static T LoadFromJson<T>(string json) where T : class 
 		{
-			if (File.Exists(fileName) == false)
-				return null;
-
-			var json = File.ReadAllText(fileName);
-			var dto = Deserialize<T>(json);
-
-			return dto;
+            return Deserialize<T>(json);
 		}
+
+        public static string ReadFromFile(string fileName)
+        {
+            return File.Exists(fileName) == false ? null : File.ReadAllText(fileName);
+        }
 
 		private static string Serialize(Object dto)
 		{
@@ -32,5 +35,15 @@ namespace WordMaster
 		{
 			return JsonConvert.DeserializeObject<T>(json);
 		}
+
+        public static string LoadFromPlayerPreference(string key)
+        {
+            return PlayerPrefs.GetString(key);
+        }
+
+        public static void SaveToPlayerPreference(string key, string text)
+        {
+			PlayerPrefs.SetString(key, text);
+        }
 	}
 }

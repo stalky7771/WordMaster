@@ -12,40 +12,46 @@ public class OptionsView : MonoBehaviour
 	[SerializeField] private Transform _buttonShow;
 	[SerializeField] private GameObject _panelToggles;
 
-	private void Awake()
+	private void Start()
 	{
-		_toggleShowWordLength.isOn = Context.Options.ShowWordLength;
-		_toggleShowFirstLetter.isOn = Context.Options.ShowFirstLetter;
-		_toggleShowTranslateAfterWrongTry.isOn = Context.Options.ShowCorrectWord;
-		_toggleIsReversed.isOn = Context.Options.IsReversed;
+		_toggleShowWordLength.isOn = Context.Config.ShowWordLength;
+		_toggleShowFirstLetter.isOn = Context.Config.ShowFirstLetter;
+		_toggleShowTranslateAfterWrongTry.isOn = Context.Config.ShowCorrectWord;
+		_toggleIsReversed.isOn = Context.Config.IsReversedWord;
 
-		_panelToggles.SetActive(Context.Options.IsShowOptionsPanel);
+		_panelToggles.SetActive(Context.Config.ShowOptionsPanel);
+        SetArrowDirection(Context.Config.ShowOptionsPanel);
 	}
 
-	public void OnToggleShowWordLength(bool val)
+    public void OnToggleShowWordLength(bool val)
 	{
-		Context.Options.ShowWordLength = val;
+		Context.Config.ShowWordLength = val;
 	}
 
 	public void OnToggleShowFirstLetter(bool val)
 	{
-		Context.Options.ShowFirstLetter = val;
+		Context.Config.ShowFirstLetter = val;
 	}
 
 	public void OnToggleTranslateAfterWrongTry(bool val)
 	{
-		Context.Options.ShowCorrectWord = val;
+		Context.Config.ShowCorrectWord = val;
 	}
 
 	public void OnToggleIsReversed(bool val)
 	{
-		Context.Options.IsReversed = val;
+		Context.Config.IsReversedWord = val;
 	}
 
 	public void OnClickShowOptions()
 	{
 		_panelToggles.SetActive(!_panelToggles.activeSelf);
-		Context.Options.IsShowOptionsPanel = _panelToggles.activeSelf;
-		_buttonShow.transform.localScale = new Vector3(_panelToggles.activeSelf ? -1 : 1, 1, 1);
+		Context.Config.ShowOptionsPanel = _panelToggles.activeSelf;
+        SetArrowDirection(Context.Config.ShowOptionsPanel);
+    }
+
+    private void SetArrowDirection(bool isLeft)
+    {
+        _buttonShow.transform.localScale = new Vector3(isLeft ? -1 : 1, 1, 1);
 	}
 }

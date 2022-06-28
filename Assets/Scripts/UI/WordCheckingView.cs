@@ -40,6 +40,22 @@ public class WordCheckingView : MonoBehaviour
 		DictManager.OnDictionaryFinished += OnDictionaryFinished;
 	}
 
+	//private void OnEnable()
+	//{
+	//	DictManager.OnUpdateUi += OnUpdateUI;
+	//	DictManager.OnSetNewWord += OnSetNewWord;
+	//	DictManager.OnPrintDictionary += OnPrintDictionary;
+	//	DictManager.OnDictionaryFinished += OnDictionaryFinished;
+	//}
+
+	//private void OnDisable()
+	//{
+	//	DictManager.OnUpdateUi -= OnUpdateUI;
+	//	DictManager.OnSetNewWord -= OnSetNewWord;
+	//	DictManager.OnPrintDictionary -= OnPrintDictionary;
+	//	DictManager.OnDictionaryFinished -= OnDictionaryFinished;
+	//}
+
 	private void Update()
 	{
 		FocusInputField();

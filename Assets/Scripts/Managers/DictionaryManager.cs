@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using UnityEngine;
 
 namespace WordMaster
@@ -32,9 +31,9 @@ namespace WordMaster
 
 		public override void InitStart()
 		{
-			Context.Options.OnUpdate += UpdateWordChecker;
+			Context.Config.OnUpdate += UpdateWordChecker;
 
-			var fileName = Context.Options.DictionaryFileName;
+			var fileName = Context.Config.LastDictionaryFilePath;
 
 			if (string.IsNullOrEmpty(fileName))
 				fileName = @"D:\_RESEARCH\UNITY\Dictionaries\L15.dict";
@@ -44,16 +43,18 @@ namespace WordMaster
 
 		public void SaveToJson()
 		{
-			PersistenceHelper.SaveToJson(_dictionary.FileName, new DictionaryDto(_dictionary));
+			var json = PersistenceHelper.SaveToJson(new DictionaryDto(_dictionary));
+			PersistenceHelper.WriteToFile(_dictionary.FileName, json);
 		}
 
 		public void LoadFromJson(string fileName)
-		{
-			var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(fileName);
+        {
+            var json = PersistenceHelper.ReadFromFile(fileName);
+			var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(json);
 
 			_dictionary = new Dictionary(dto, fileName);
 
-			Context.Options.DictionaryFileName = fileName;
+			Context.Config.LastDictionaryFilePath = fileName;
 			OnPrintDictionary?.Invoke(_dictionary);
 
 			if (_dictionary.IsEmpty)
@@ -91,7 +92,8 @@ namespace WordMaster
 
 		public bool InputWord(string text, bool isEndEdit = false)
 		{
-			var isReversed = Context.Options.IsReversed;
+			var isReversed = Context.Config.IsReversedWord;
+            var showFirstLetter = Context.Config.ShowFirstLetter;
 			var result = false;
 
 			_lastEnteredText = text;
@@ -111,7 +113,7 @@ namespace WordMaster
 
 			if (isCorrectWord)
 			{
-				Masked = CurrentWord.GetMaskedText(text, isReversed).SetColor("white");
+				Masked = CurrentWord.GetMaskedText(text, isReversed, showFirstLetter).SetColor("white");
 
 				if (CurrentWord.IsFullTranslation(text, isReversed))
 				{
@@ -150,9 +152,9 @@ namespace WordMaster
 				}
 
 				//var phrase = CurrentWord.Value;
-				Masked = Context.Options.ShowCorrectWord || isEndEdit
-					? CurrentWord.GetMaskedText(text, isReversed, false).SetColor("red") //phrase.SetColor("red")
-					: CurrentWord.GetMaskedText(text, isReversed).SetColor("red");
+				Masked = Context.Config.ShowCorrectWord && isEndEdit
+					? CurrentWord.GetMaskedText(text, isReversed, showFirstLetter, false).SetColor("red") //phrase.SetColor("red")
+					: CurrentWord.GetMaskedText(text, isReversed, showFirstLetter).SetColor("red");
 
 				CurrentWord.AnswerWrong();
 				Dictionary.Statistics.IncrementWrongAnswer();

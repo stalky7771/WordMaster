@@ -19,8 +19,8 @@ namespace WordMaster
 		private string _translation;
 		private int _ratio;
 
-		public string Value => IsReversed ? _translation : _value;
-		public string Translation => IsReversed ? _value : _translation;
+		public string Value => Context.Config.IsReversedWord ? _translation : _value;
+		public string Translation => Context.Config.IsReversedWord ? _value : _translation;
 		public string Transcription { get; private set; }
 		public string Example { get; private set; }
 
@@ -54,10 +54,7 @@ namespace WordMaster
 			}
 		}
 
-		public static bool IsReversed { get; set; }
-		public static bool ShowWordLength { get; set; }
-		public static bool ShowFirstLetter { get; set; }
-		public int Viewed { get; private set; }
+        public int Viewed { get; private set; }
 
 		public void SetData(DataType type, string str)
 		{
@@ -95,7 +92,7 @@ namespace WordMaster
 			_value = dto.w;
 			_translation = dto.tsl;
 			Transcription = dto.tcr;
-			Example = dto.expl;
+			Example = dto.ex;
 
 			_ratio = dto.r;
 			Viewed = dto.v;
@@ -149,8 +146,8 @@ namespace WordMaster
 		{
 			string longText = !isReverce ? _value : _translation;
 
-			bool isEqualLedgth = longText.Length == textForCheck.Length;
-			return IsCorrectTranslation(textForCheck, isReverce) && isEqualLedgth;
+			bool isEqualLength = longText.Length == textForCheck.Length;
+			return IsCorrectTranslation(textForCheck, isReverce) && isEqualLength;
 		}
 
 		public bool IsCorrectTranslation(string textForCheck, bool isReverce)
@@ -168,29 +165,39 @@ namespace WordMaster
 			return true;
 		}
 
-		public string GetMaskedText(string textForCheck, bool isReverse, bool isAsterisk = true)
+		public string GetMaskedText(string textForCheck,
+            bool isReverse,
+			bool showFirstLetter,
+            bool isAsterisk = true)
 		{
 			var fullText = isReverse ? _translation : _value;
 
 			var result = string.Empty;
 
-			if (ShowWordLength == false)
+			if (Context.Config.ShowWordLength == false)
 			{
 				return result;
 			}
 
-			if (ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
+			if (Context.Config.ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
 			{
 				textForCheck = _translation.Substring(0, 1);
 			}
 
 			for (var i = 0; i < fullText.Length; i++)
 			{
+                if (i == 0 && showFirstLetter)
+                {
+                    result += fullText[i];
+					continue;
+				}
+
 				if (i < textForCheck.Length)
 				{
 					result += " ";//fullText[i];
 					continue;
 				}
+
 				if (isAsterisk)
 					result += fullText[i] != ' ' ? "*" : " ";
 				else
