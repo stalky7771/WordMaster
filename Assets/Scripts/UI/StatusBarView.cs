@@ -8,20 +8,20 @@ public class StatusBarView : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _middleText;
 	[SerializeField] private TextMeshProUGUI _rightText;
 
-	public string Version { set => _rightText.text = value; }
+	public string RightText { set => _rightText.text = value; }
 	public string LeftText { set => _leftText.text = value; }
 	public string MiddleText { set => _middleText.text = value; }
 
 	private void Start()
 	{
-		Version = string.Empty;
+		RightText = string.Empty;
 		MiddleText = string.Empty;
 		LeftText = string.Empty;
 
 		Context.DictionaryManager.OnWordFinished += OnWordFinished;
 		Context.FpsManager.OnUpdate += OnUpdateFps;
 
-		Version = Context.GameManager.Ver;
+		RightText = Context.Config.Version;
 	}
 
 	private void Update()

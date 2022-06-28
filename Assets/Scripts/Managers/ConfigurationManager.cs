@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace WordMaster
 {
@@ -14,6 +15,8 @@ namespace WordMaster
         private bool _showOptionsPanel;
 		private bool _isReversedWord;
         private string _lastDictionaryFilePath;
+
+		public string Version { get; private set; }
 
         public bool ShowWordLength
         {
@@ -90,19 +93,19 @@ namespace WordMaster
 
             if (string.IsNullOrEmpty(json) == false)
             {
-                var dto = PersistenceHelper.LoadFromJson<Dto>(json);
+                var dto = PersistenceHelper.LoadFromJson<ConfigurationManagerDto>(json);
 				Init(dto);
             }
         }
 
         public void Save()
         {
-            var dto = new Dto(this);
+            var dto = new ConfigurationManagerDto(this);
             var json = PersistenceHelper.SaveToJson(dto);
 			PersistenceHelper.SaveToPlayerPreference(PLAYER_PREFERENCES_KEY, json);
         }
 
-        private void Init(Dto dto)
+        private void Init(ConfigurationManagerDto dto)
         {
             ShowWordLength = dto.showWordLength;
             ShowFirstLetter = dto.showFirstLetter;
@@ -110,32 +113,28 @@ namespace WordMaster
             IsReversedWord = dto.isReversedWord;
             ShowOptionsPanel = dto.showOptionsPanel;
             LastDictionaryFilePath = dto.lastDictionaryFilePath;
+            Version = dto.version;
+
+            if (Application.isEditor)
+            {
+                Version = UpdateUnityEditorVersion(Version);
+                Save();
+            }
         }
 
-		[Serializable]
-		private class Dto
+        private string UpdateUnityEditorVersion(string ver)
         {
-            public bool showWordLength;
-            public bool showFirstLetter;
-            public bool showCorrectWord;
-            public bool isReversedWord;
-            public bool showOptionsPanel;
-            public string lastDictionaryFilePath;
-
-            public Dto()
+            if (string.IsNullOrEmpty(ver))
             {
-
+                ver = "0.0.0.423";
             }
+            string[] numbers = ver.Split('.');
+            int playModeCount = int.Parse(numbers[3]);
 
-            public Dto(ConfigurationManager config)
-            {
-                showWordLength = config.ShowWordLength;
-                showFirstLetter = config.ShowFirstLetter;
-                showCorrectWord = config.ShowCorrectWord;
-                isReversedWord = config.IsReversedWord;
-                showOptionsPanel = config.ShowOptionsPanel;
-                lastDictionaryFilePath = config.LastDictionaryFilePath;
-            }
+			if (Application.isEditor)
+                playModeCount++;
+
+            return $"{numbers[0]}.{numbers[1]}.{numbers[2]}.{playModeCount}";
         }
     }
 }
