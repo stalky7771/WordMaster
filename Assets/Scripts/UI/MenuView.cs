@@ -7,20 +7,12 @@ public class MenuView : MonoBehaviour
 
 	public void OnClickTest()
 	{
-		string alphabet =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzAÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜÛÚİŞßàáâãäå¸æçèéêëìíîïğñòóôõö÷øùüûúışÿ.,!? *'- 0123456789[]()?a???????3?";
-		string text = "î, îêîëî (î âğåìåíè)";
-		for (var i = 0; i < text.Length; i++)
-		{
-			var simbol = text[i];
-			if (alphabet.Contains(simbol) == false)
-				Debug.LogWarning(">>> " + text[i]);
-		}
+		
 	}
 
 	public void OnClickSave()
 	{
-		Context.DictionaryManager.SaveToJson();
+		Context.DictionaryManager.SaveDictionary();
 	}
 
 	public void OnClickRemoveWord()
@@ -34,4 +26,9 @@ public class MenuView : MonoBehaviour
 		if (_console.activeSelf)
 			Context.DictionaryManager.PrintDictionary();
 	}
+
+    public void OnClickResetProgress()
+    {
+		Context.DictionaryManager.ResetProgress();
+    }
 }

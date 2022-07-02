@@ -43,7 +43,7 @@ public class TabLoadDictionaryView : MonoBehaviour
 
 			item.Init(fileName, "", () =>
 			{
-				Context.DictionaryManager.LoadFromJson(path);
+				Context.DictionaryManager.LoadDictionary(path);
 				_tabHolderView.OnShowCheckWords();
 			});
 		});

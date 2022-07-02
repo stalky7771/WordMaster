@@ -12,13 +12,16 @@ namespace WordMasterEditor
 		public event Action<Dictionary> OnShowDictionary;
 		public event Action<string> OnUpdateStatusBar;
 
-		public string FilePath { get; private set; }
+		public string FileName { get; private set; }
 
-		public void Load(string filePath)
+		public void Load(string fileName)
 		{
-			Dictionary = new Dictionary();
-			Dictionary.LoadFromJson(filePath);
-			OnUpdateStatusBar?.Invoke(FilePath);
+            var json = PersistenceHelper.ReadFromFile(fileName);
+            var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(json);
+
+            Dictionary = new Dictionary();
+			Dictionary.Load(fileName);
+			OnUpdateStatusBar?.Invoke(FileName);
 			UpdateView();
 		}
 
@@ -90,7 +93,8 @@ namespace WordMasterEditor
 					newDictionary.AddWord(wordItem);
 				}
 
-				newDictionary.SaveToJson(fileOut);
+                var json = PersistenceHelper.SaveToJson(new DictionaryDto(newDictionary));
+                PersistenceHelper.WriteToFile(fileOut, json);
 			}
 		}
 	}

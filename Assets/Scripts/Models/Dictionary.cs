@@ -61,24 +61,33 @@ namespace WordMaster
 			}
 		}
 
-		public Dictionary()
-		{
+        public void Save(string fileName)
+        {
+            var json = PersistenceHelper.SaveToJson(new DictionaryDto(this));
+            PersistenceHelper.WriteToFile(fileName, json);
+        }
 
-		}
+        public void Load(string fileName)
+        {
+            var json = PersistenceHelper.ReadFromFile(fileName);
+            var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(json);
 
-		public Dictionary(DictionaryDto dto, string fileName)
-		{
-			FileName = fileName;
+            FileName = fileName;
 
-			Words = new List<Word>();
+            Words = new List<Word>();
 
-			dto?.words.ForEach(wordItemDto =>
-			{
-				Words.Add(new Word(wordItemDto));
-			});
+            dto?.words.ForEach(wordItemDto =>
+            {
+                Words.Add(new Word(wordItemDto));
+            });
 
-			Statistics = new DictionaryStatistics(dto?.statisticsDto, this);
-		}
+            Statistics = new DictionaryStatistics(dto?.statisticsDto, this);
+        }
+
+        public void ResetProgress()
+        {
+			Words.ForEach(w => w.Ratio = 0);
+        }
 
 		private Word FindWordWithWorstRatio(float probability)
 		{
@@ -89,41 +98,15 @@ namespace WordMaster
 			return Words.Find(w => w.Ratio == minRatio);
 		}
 
-		/*public void SaveToJson(string path)
-		{
-			FileName = path;
-			using var outputFile = new StreamWriter(path);
-			outputFile.Write(JsonHelper.Serialize(new DictionaryDto(this)));
-		}*/
-
-		/*public void LoadFromJson(string fileName)
-		{
-			if (File.Exists(fileName) == false)
-				return;
-
-			FileName = fileName;
-
-			var json = File.ReadAllText(fileName);
-			var dto = JsonHelper.Deserialize(json);
-
-			Words = new List<Word>();
-
-			dto.words.ForEach(wordItemDto =>
-			{
-				Words.Add(new Word(wordItemDto));
-			});
-
-			Statistics = new DictionaryStatistics(dto.statisticsDto, this);
-		}*/
-
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
 
+            var index = 0;
 			foreach (var w in Words)
 			{
 				//var transcription = "[" + w.Transcription + "]";
-				sb.AppendLine($"{w.Value,-32} {w.Translation,-32} {w.Ratio,2}"); // {transcription,-20}\n");
+				sb.AppendLine($"{index++,-4} {w.Value,-32} {w.Translation,-42} {w.Ratio,2}"); // {transcription,-20}\n");
 			}
 
 			return sb.ToString();

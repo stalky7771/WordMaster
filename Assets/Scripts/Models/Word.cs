@@ -13,14 +13,19 @@ namespace WordMaster
 			Description
 		}
 
+        public static bool IsReversedWord;
+        public static bool ShowWordLength;
+        public static bool ShowFirstLetter;
+        public static bool ShowCorrectWord;
+
 		public const int MIN_RATIO = -5;
 		public const int MAX_RATIO = 5;
 		private string _value;
 		private string _translation;
 		private int _ratio;
 
-		public string Value => Context.Config.IsReversedWord ? _translation : _value;
-		public string Translation => Context.Config.IsReversedWord ? _value : _translation;
+		public string Value => IsReversedWord ? _translation : _value;
+		public string Translation => IsReversedWord ? _value : _translation;
 		public string Transcription { get; private set; }
 		public string Example { get; private set; }
 
@@ -29,9 +34,11 @@ namespace WordMaster
 			get
 			{
 				if (Example != null)
-				{
-					return Example.Replace(Value, new string('*', Value.Length));
-				}
+                {
+                    return ShowWordLength
+                        ? Example.Replace(Value, new string('*', Value.Length))
+                        : Example.Replace(Value, new string('*', 1));
+                }
 				return string.Empty;
 			}
 		}
@@ -174,27 +181,22 @@ namespace WordMaster
 
 			var result = string.Empty;
 
-			if (Context.Config.ShowWordLength == false)
+			if (ShowWordLength == false)
 			{
 				return result;
 			}
 
-			if (Context.Config.ShowFirstLetter && string.IsNullOrEmpty(textForCheck))
+            for (var i = 0; i < fullText.Length; i++)
 			{
-				textForCheck = _translation.Substring(0, 1);
-			}
-
-			for (var i = 0; i < fullText.Length; i++)
-			{
-                if (i == 0 && showFirstLetter)
+                if (i == 0 && string.IsNullOrEmpty(textForCheck) && ShowFirstLetter)
                 {
                     result += fullText[i];
 					continue;
-				}
+                }
 
 				if (i < textForCheck.Length)
 				{
-					result += " ";//fullText[i];
+					result += " ";
 					continue;
 				}
 
@@ -204,7 +206,7 @@ namespace WordMaster
 					result += fullText[i];
 			}
 
-			return result;
+            return result;
 		}
 
 		public bool IsFullTranslation(string textForCheck, bool isReverse)

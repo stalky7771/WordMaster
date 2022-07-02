@@ -7,7 +7,7 @@ public class WordCheckingView : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI _textTranslation;
 	[SerializeField] private TextMeshProUGUI _textMasked;
-	[SerializeField] private TextMeshProUGUI _textDescription;
+	[SerializeField] private TextMeshProUGUI _textExample;
 	[SerializeField] private TMP_InputField _inputField;
 
 	[SerializeField] private GameObject _checkPanel;
@@ -27,9 +27,9 @@ public class WordCheckingView : MonoBehaviour
 		set => _textMasked.text = value;
 	}
 
-	public string Description
+	public string Example
 	{
-		set => _textDescription.text = value;
+		set => _textExample.text = value;
 	}
 
 	private void Start()
@@ -133,7 +133,7 @@ public class WordCheckingView : MonoBehaviour
 	{
 		Translation = DictManager.CurrentWord.Translation;
 		Masked = DictManager.Masked;
-		Description = DictManager.CurrentWord.DescriptionWithCensure;
+		Example = DictManager.CurrentWord.DescriptionWithCensure;
 		_wordProgressView.Progress = DictManager.CurrentWord.Ratio;
 	}
 
@@ -141,7 +141,7 @@ public class WordCheckingView : MonoBehaviour
 	{
 		_inputField.text = string.Empty;
 		Translation = word.Translation;
-		Description = word.DescriptionWithCensure;
+		Example = word.DescriptionWithCensure;
 		Masked = DictManager.Masked;
 		_wordProgressView.Progress = DictManager.CurrentWord.Ratio;
 	}

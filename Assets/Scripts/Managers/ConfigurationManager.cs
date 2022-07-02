@@ -9,21 +9,17 @@ namespace WordMaster
 
         public event Action OnUpdate;
 
-        private bool _showWordLength;
-        private bool _showFirstLetter;
-        private bool _showCorrectWord;
         private bool _showOptionsPanel;
-		private bool _isReversedWord;
         private string _lastDictionaryFilePath;
 
 		public string Version { get; private set; }
 
         public bool ShowWordLength
         {
-            get => _showWordLength;
+            get => Word.ShowWordLength;
             set
             {
-                _showWordLength = value;
+                Word.ShowWordLength = value;
 				Save();
 				OnUpdate?.Invoke();
             }
@@ -31,10 +27,10 @@ namespace WordMaster
 
         public bool ShowFirstLetter
         {
-            get => _showFirstLetter;
+            get => Word.ShowFirstLetter;
 			set
-			{
-                _showFirstLetter = value;
+            {
+                Word.ShowFirstLetter = value;
 				Save();
                 OnUpdate?.Invoke();
             }
@@ -42,10 +38,10 @@ namespace WordMaster
 
         public bool ShowCorrectWord
         {
-            get => _showCorrectWord;
+            get => Word.ShowCorrectWord;
             set
             {
-                _showCorrectWord = value;
+                Word.ShowCorrectWord = value;
 				Save();
                 OnUpdate?.Invoke();
             }
@@ -53,10 +49,10 @@ namespace WordMaster
 
         public bool IsReversedWord
         {
-            get => _isReversedWord;
+            get => Word.IsReversedWord;
             set
             {
-                _isReversedWord = value;
+                Word.IsReversedWord = value;
 				Save();
                 OnUpdate?.Invoke();
             }
@@ -126,7 +122,7 @@ namespace WordMaster
         {
             if (string.IsNullOrEmpty(ver))
             {
-                ver = "0.0.0.423";
+                ver = "0.0.0.0";
             }
             string[] numbers = ver.Split('.');
             int playModeCount = int.Parse(numbers[3]);

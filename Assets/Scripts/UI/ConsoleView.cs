@@ -8,13 +8,16 @@ public class ConsoleView : MonoBehaviour
 
 	private DictionaryManager DictManager => Context.DictionaryManager;
 
-	void OnEnable()
+	private void OnEnable()
     {
 		if (DictManager != null)
 			DictManager.OnPrintDictionary += OnPrintDictionary;
-	}
 
-	void OnDisable()
+        if (Context.DictionaryManager.Dictionary != null)
+            OnPrintDictionary(Context.DictionaryManager.Dictionary);
+    }
+
+	private void OnDestroy()
 	{
 		if (DictManager != null)
 			DictManager.OnPrintDictionary -= OnPrintDictionary;

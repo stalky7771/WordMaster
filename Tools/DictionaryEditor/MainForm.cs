@@ -33,7 +33,7 @@ namespace WordMasterEditor
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var filePath = DictionaryManager.FilePath;
+			var filePath = DictionaryManager.FileName;
 
 			if (string.IsNullOrEmpty(filePath))
 			{
@@ -46,12 +46,8 @@ namespace WordMasterEditor
 			if (DictionaryManager.Dictionary == null)
 				return;
 
-			var json = JsonHelper.Serialize(new DictionaryDto(Context.DictionaryManager.Dictionary));
-
-			using (StreamWriter outputFile = new StreamWriter(filePath))
-			{
-				outputFile.Write(json);
-			}
+            var json = PersistenceHelper.SaveToJson(new DictionaryDto(DictionaryManager.Dictionary));
+            PersistenceHelper.WriteToFile(filePath, json);
 		}
 
 		private void OnShowDictionary(Dictionary dictionary)

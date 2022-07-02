@@ -38,54 +38,25 @@ namespace WordMaster
 			if (string.IsNullOrEmpty(fileName))
 				fileName = @"D:\_RESEARCH\UNITY\Dictionaries\L15.dict";
 
-			LoadFromJson(fileName);
+			LoadDictionary(fileName);
 		}
 
-		public void SaveToJson()
+		public void SaveDictionary()
 		{
-			var json = PersistenceHelper.SaveToJson(new DictionaryDto(_dictionary));
-			PersistenceHelper.WriteToFile(_dictionary.FileName, json);
+			_dictionary.Save(_dictionary.FileName);
 		}
 
-		public void LoadFromJson(string fileName)
+		public void LoadDictionary(string fileName)
         {
-            var json = PersistenceHelper.ReadFromFile(fileName);
-			var dto = PersistenceHelper.LoadFromJson<DictionaryDto>(json);
+			_dictionary = new Dictionary();
+			_dictionary.Load(fileName);
 
-			_dictionary = new Dictionary(dto, fileName);
+            Context.Config.LastDictionaryFilePath = fileName;
 
-			Context.Config.LastDictionaryFilePath = fileName;
-			OnPrintDictionary?.Invoke(_dictionary);
-
-			if (_dictionary.IsEmpty)
-			{
-				OnDictionaryFinished?.Invoke(true);
-				return;
-			}
-
-			OnDictionaryFinished?.Invoke(false);
-
-			CurrentWord = Dictionary.NextWord;
-
-			if (CurrentWord == null)
-			{
-				OnDictionaryFinished?.Invoke(true);
-				return;
-			}
-
-			InputWord(string.Empty);
-			OnSetNewWord?.Invoke(CurrentWord);
-			OnUpdateUi?.Invoke();
-
-			_wordViewCounter = 0;
+			StartWorkWithDictionary(_dictionary);
 		}
 
-		private void UpdateWordChecker()
-		{
-			InputWord(_lastEnteredText);
-		}
-
-		public override void Update()
+        public override void Update()
 		{
 			_dictionary?.AddDeltaTime(Time.deltaTime);
 		}
@@ -126,7 +97,7 @@ namespace WordMaster
 					if (_wordViewCounter == 3)
 					{
 						_wordViewCounter = 0;
-						SaveToJson();
+						SaveDictionary();
 						OnSaveDictionary?.Invoke();
 					}
 
@@ -178,6 +149,48 @@ namespace WordMaster
 		public void PrintDictionary()
 		{
 			OnPrintDictionary?.Invoke(Dictionary);
+		}
+
+        public void ResetProgress()
+        {
+			if (_dictionary == null)
+				return;
+
+			_dictionary.ResetProgress();
+            StartWorkWithDictionary(_dictionary);
+        }
+
+        private void UpdateWordChecker()
+        {
+            InputWord(_lastEnteredText);
+        }
+
+        private void StartWorkWithDictionary(Dictionary dictionary)
+        {
+            OnPrintDictionary?.Invoke(dictionary);
+
+            if (dictionary.IsEmpty)
+            {
+                OnDictionaryFinished?.Invoke(true);
+                return;
+            }
+
+            OnDictionaryFinished?.Invoke(false);
+
+            CurrentWord = dictionary.NextWord;
+
+            if (CurrentWord == null)
+            {
+                OnDictionaryFinished?.Invoke(true);
+                return;
+            }
+
+            InputWord(string.Empty);
+            OnSetNewWord?.Invoke(CurrentWord);
+            OnUpdateUi?.Invoke();
+			OnPrintDictionary?.Invoke(_dictionary);
+
+            _wordViewCounter = 0;
 		}
 	}
 }

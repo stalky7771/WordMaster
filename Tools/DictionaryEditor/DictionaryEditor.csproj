@@ -56,6 +56,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Assets\Scripts\Managers\BaseManager.cs">
+      <Link>WordMasterFiles\BaseManager.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Scripts\Models\BaseModel.cs">
       <Link>WordMasterFiles\BaseModel.cs</Link>
     </Compile>
@@ -80,8 +83,8 @@
     <Compile Include="..\..\Assets\Scripts\Utils\Extentions.cs">
       <Link>WordMasterFiles\Extentions.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Scripts\Utils\JsonHelper.cs">
-      <Link>WordMasterFiles\JsonHelper.cs</Link>
+    <Compile Include="..\..\Assets\Scripts\Utils\PersistenceHelper.cs">
+      <Link>WordMasterFiles\PersistenceHelper.cs</Link>
     </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="DictionaryManager.cs" />
