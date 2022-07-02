@@ -4,10 +4,10 @@ namespace WordMaster
 {
 	public class DictionaryStatistics
 	{
-		public int CorrectAnswer { get; private set; }
-		public int WrongAnswer { get; private set; }
-		public int CorrectAnswerInSession { get; private set; }
-		public int WrongAnswerInSession { get; private set; }
+		public int CorrectAnswers { get; private set; }
+		public int WrongAnswers { get; private set; }
+		public int CorrectAnswersInSession { get; private set; }
+		public int WrongAnswersInSession { get; private set; }
 		public float Time { get; private set; }
 		public Dictionary Dictionary { get; private set; }
 
@@ -20,8 +20,8 @@ namespace WordMaster
 		{
 			if (dto != null)
 			{
-				CorrectAnswer = dto.correctAnswer;
-				WrongAnswer = dto.wrongAnswer;
+				CorrectAnswers = dto.correctAnswer;
+				WrongAnswers = dto.wrongAnswer;
 				Time = dto.time;
 			}
 			
@@ -30,14 +30,14 @@ namespace WordMaster
 
 		public void IncrementCorrectAnswer()
 		{
-			CorrectAnswer++;
-			CorrectAnswerInSession++;
+			CorrectAnswers++;
+			CorrectAnswersInSession++;
 		}
 
 		public void IncrementWrongAnswer()
 		{
-			WrongAnswer++;
-			WrongAnswerInSession++;
+			WrongAnswers++;
+			WrongAnswersInSession++;
 		}
 
 		public void AddDeltaTime(float deltaTime)
@@ -45,12 +45,17 @@ namespace WordMaster
 			Time += deltaTime;
 		}
 
+        public void ResetTime()
+        {
+            Time = 0;
+        }
+
 		public DictionaryStatisticsDto GetDto()
 		{
 			var dto = new DictionaryStatisticsDto
 			{
-				correctAnswer = CorrectAnswer,
-				wrongAnswer = WrongAnswer,
+				correctAnswer = CorrectAnswers,
+				wrongAnswer = WrongAnswers,
 				time = Time
 			};
 
@@ -62,15 +67,15 @@ namespace WordMaster
 			var sb = new StringBuilder();
 			
 			sb.Append("Correct: ");
-			sb.Append(CorrectAnswerInSession.ToString().SetColor("green"));
+			sb.Append(CorrectAnswersInSession.ToString().SetColor("green"));
 			sb.Append("/");
-			sb.Append(CorrectAnswer.ToString());
+			sb.Append(CorrectAnswers.ToString());
 			sb.Append(", ");
 
 			sb.Append("Wrong: ");
-			sb.Append(WrongAnswerInSession.ToString().SetColor("red"));
+			sb.Append(WrongAnswersInSession.ToString().SetColor("red"));
 			sb.Append("/");
-			sb.Append(WrongAnswer.ToString());
+			sb.Append(WrongAnswers.ToString());
 
 			if (Dictionary != null)
 			{
@@ -86,8 +91,8 @@ namespace WordMaster
 
 		public void Clear()
 		{
-			CorrectAnswerInSession = 0;
-			WrongAnswerInSession = 0;
+			CorrectAnswersInSession = 0;
+			WrongAnswersInSession = 0;
 		}
 	}
 }

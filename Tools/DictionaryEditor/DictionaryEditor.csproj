@@ -77,6 +77,9 @@
     <Compile Include="..\..\Assets\Scripts\Models\Word.cs">
       <Link>WordMasterFiles\Word.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Scripts\Models\WordBuilder.cs">
+      <Link>WordMasterFiles\WordBuilder.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Scripts\Models\WordDto.cs">
       <Link>WordMasterFiles\WordDto.cs</Link>
     </Compile>

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using WordMaster;
 
 namespace WordMasterEditor
@@ -12,8 +10,7 @@ namespace WordMasterEditor
 		private DictionaryManager DictionaryManager => Context.DictionaryManager;
 
 		[DllImport("user32.dll")]
-
-		static public extern bool ShowScrollBar(System.IntPtr hWnd, int wBar, bool bShow);
+        public static extern bool ShowScrollBar(System.IntPtr hWnd, int wBar, bool bShow);
 		private const uint SB_VERT = 1;
 
 		public MainForm()
@@ -65,7 +62,9 @@ namespace WordMasterEditor
 					w.Value,
 					w.Translation,
 					w.Transcription != string.Empty ? $"[{w.Transcription}]" : string.Empty,
-					w.Example
+					w.Example,
+					w.ExampleTranslation,
+					w.Type
 				};
 				var listViewItem = new ListViewItem(row);
 				listViewWords.Items.Add(listViewItem);
@@ -102,19 +101,23 @@ namespace WordMasterEditor
 			if (word == null)
 				return;
 
-			tbWord.Text = word.Value;
-			tbTranslate.Text = word.Translation;
-			tbTranskription.Text = word.Transcription;
-			tbExample.Text = word.Example;
-		}
+			textWord.Text = word.Value;
+			textTranslate.Text = word.Translation;
+			textTranskription.Text = word.Transcription;
+			textExample.Text = word.Example;
+            textExampleTranslation.Text = word.ExampleTranslation;
+            textType.Text = word.Type;
+        }
 
 		private void ClearEditForm()
 		{
-			tbWord.Text = string.Empty;
-			tbTranslate.Text = string.Empty;
-			tbTranskription.Text = string.Empty;
-			tbExample.Text = string.Empty;
-		}
+			textWord.Text = string.Empty;
+			textTranslate.Text = string.Empty;
+			textTranskription.Text = string.Empty;
+			textExample.Text = string.Empty;
+			textExampleTranslation.Text = string.Empty;
+            textType.Text = string.Empty;
+        }
 
 		private void FocusItem(ListView listView, int index)
 		{
@@ -130,45 +133,6 @@ namespace WordMasterEditor
 			listView.Select();
 		}
 
-		private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Word word = new Word();
-			word.SetData(Word.DataType.Value, tbWord.Text);
-			word.SetData(Word.DataType.Translation, tbTranslate.Text);
-			word.SetData(Word.DataType.Transcription, tbTranskription.Text);
-			word.SetData(Word.DataType.Description, tbExample.Text);
-
-			ClearEditForm();
-
-			DictionaryManager.AddWord(word);
-		}
-
-		private void upToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var word = new Word();
-			word.SetData(Word.DataType.Value, tbWord.Text);
-			word.SetData(Word.DataType.Translation, tbTranslate.Text);
-			word.SetData(Word.DataType.Transcription, tbTranskription.Text);
-			word.SetData(Word.DataType.Description, tbExample.Text);
-
-			ClearEditForm();
-
-			DictionaryManager.UpdateWord(word);
-		}
-
-		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (listViewWords.FocusedItem == null)
-				return;
-
-			int focusedIndex = listViewWords.FocusedItem.Index;
-
-			DictionaryManager.RemoveWord(listViewWords.FocusedItem.Index);
-			OnShowDictionary(DictionaryManager.Dictionary);
-
-			FocusItem(listViewWords, focusedIndex);
-		}
-
 		private void listViewWords_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
 		{
 			Console.Write("Column Resizing");
@@ -182,6 +146,45 @@ namespace WordMasterEditor
 				return;
 
 			DictionaryManager.ConvertCSVtoDictionary(openFileDialog.FileName);
+		}
+
+        private Word GetWordFromTextBoxex()
+        {
+            WordBuilder wb = new WordBuilder();
+            wb.Add(Word.DataType.Value, textWord.Text);
+            wb.Add(Word.DataType.Translation, textTranslate.Text);
+            wb.Add(Word.DataType.Transcription, textTranskription.Text);
+            wb.Add(Word.DataType.Example, textExample.Text);
+            wb.Add(Word.DataType.ExampleTranslation, textExampleTranslation.Text);
+            wb.Add(Word.DataType.Type, textType.Text);
+
+            return wb.ToWord;
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            DictionaryManager.AddWord(GetWordFromTextBoxex());
+            ClearEditForm();
+        }
+
+		private void buttonUpdate_Click(object sender, EventArgs e)
+		{
+            var word = GetWordFromTextBoxex();
+            ClearEditForm();
+            DictionaryManager.UpdateWord(word);
+		}
+
+		private void buttonDelete_Click(object sender, EventArgs e)
+		{
+            if (listViewWords.FocusedItem == null)
+                return;
+
+            int focusedIndex = listViewWords.FocusedItem.Index;
+
+            DictionaryManager.RemoveWord(listViewWords.FocusedItem.Index);
+            OnShowDictionary(DictionaryManager.Dictionary);
+
+            FocusItem(listViewWords, focusedIndex);
 		}
 	}
 }

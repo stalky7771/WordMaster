@@ -8,7 +8,7 @@ namespace WordMaster
 	{
 		public static string SaveToJson(object dto)
 		{
-			return JsonUtility.ToJson(dto, true);
+			return JsonConvert.SerializeObject(dto, Formatting.Indented);
         }
 
         public static void WriteToFile(string fileName, string text)

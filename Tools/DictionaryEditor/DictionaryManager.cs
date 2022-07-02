@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using WordMaster;
 
 namespace WordMasterEditor
@@ -59,9 +57,10 @@ namespace WordMasterEditor
 		}
 
 		public void ConvertCSVtoDictionary(string fileName)
-		{
-			
-			var fileIn = fileName;
+        {
+			throw new NotImplementedException();
+
+			/*var fileIn = fileName;
 			var fileOut = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileIn) + ".dict";
 
 			using (var sr = new StreamReader(fileIn))
@@ -95,7 +94,7 @@ namespace WordMasterEditor
 
                 var json = PersistenceHelper.SaveToJson(new DictionaryDto(newDictionary));
                 PersistenceHelper.WriteToFile(fileOut, json);
-			}
+		    }*/
 		}
 	}
 }

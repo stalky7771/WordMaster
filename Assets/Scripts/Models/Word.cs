@@ -1,52 +1,62 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using UnityEngine;
 
 namespace WordMaster
 {
-	public class Word : BaseModel
+    public class Word : BaseModel
 	{
 		public enum DataType
 		{
 			Value,
 			Translation,
 			Transcription,
-			Description
+			Example,
+			ExampleTranslation,
+			Type
 		}
 
-        public static bool IsReversedWord;
+        public const int MIN_RATIO = -5;
+        public const int MAX_RATIO = 5;
+
+		public static bool IsReversedWord;
         public static bool ShowWordLength;
         public static bool ShowFirstLetter;
         public static bool ShowCorrectWord;
 
-		public const int MIN_RATIO = -5;
-		public const int MAX_RATIO = 5;
-		private string _value;
+        private string _value;
 		private string _translation;
+        private string _example;
+        private string _exampleTranslation;
 		private int _ratio;
 
 		public string Value => IsReversedWord ? _translation : _value;
 		public string Translation => IsReversedWord ? _value : _translation;
 		public string Transcription { get; private set; }
-		public string Example { get; private set; }
+		public string Type { get; private set; }
+		public string Example => IsReversedWord ? _exampleTranslation : _example;
+		public string ExampleTranslation => IsReversedWord ? _example : _exampleTranslation;
 
-		public string DescriptionWithCensure
+		public string ExampleForView
 		{
 			get
-			{
-				if (Example != null)
-                {
-                    return ShowWordLength
-                        ? Example.Replace(Value, new string('*', Value.Length))
-                        : Example.Replace(Value, new string('*', 1));
-                }
-				return string.Empty;
-			}
+            {
+                var text = Example;
+				if (string.IsNullOrEmpty(text))
+					return String.Empty;
+                
+                return ShowWordLength
+                    ? text.Replace(Value, new string('*', Value.Length))
+                    : text.Replace(Value, new string('*', 1));
+            }
 		}
 
 		public string ValueForDto => _value;
 		public string TranslationForDto => _translation;
+        public string ExampleForDto => _example;
+        public string ExampleTranslationForDto => _exampleTranslation;
 
-		public int Ratio
+        public int Ratio
 		{
 			get => _ratio;
 			set => _ratio = Mathf.Clamp(value, MIN_RATIO, MAX_RATIO);
@@ -72,7 +82,9 @@ namespace WordMaster
 				case DataType.Value: _value = str; break;
 				case DataType.Translation: _translation = str; break;
 				case DataType.Transcription: Transcription = str; break;
-				case DataType.Description: Example = str; break;
+				case DataType.Example: _example = str; break;
+				case DataType.ExampleTranslation: _exampleTranslation = str; break;
+				case DataType.Type: Type = str; break;
 			}
 		}
 
@@ -81,27 +93,17 @@ namespace WordMaster
 
 		}
 
-		public Word(string value, string translation)
-		{
-			_value = value;
-			_translation = translation;
-		}
-
-		public Word(string value, string translation, string example)
-		{
-			_value = value;
-			_translation = translation;
-			Example = example;
-		}
-
 		public Word(WordDto dto)
 		{
 			_value = dto.w;
 			_translation = dto.tsl;
-			Transcription = dto.tcr;
-			Example = dto.ex;
+            _example = dto.ex;
+            _exampleTranslation = dto.extr;
 
-			_ratio = dto.r;
+            Type = dto.t;
+			Transcription = dto.tcr;
+
+            _ratio = dto.r;
 			Viewed = dto.v;
 		}
 
@@ -109,14 +111,15 @@ namespace WordMaster
 		{
 			_value = other.Value;
 			_translation = other.Translation;
-			Transcription = other.Transcription;
-			Example = other.Example;
-		}
+            _example = other._example;
+            _exampleTranslation = other._exampleTranslation;
 
-		/*private string GetString(string[] data, int index)
-		{
-			return index < data.Length ? data[index] : string.Empty;
-		}*/
+            Type = other.Type;
+            Transcription = other.Transcription;
+
+            _ratio = other._ratio;
+            Viewed = other.Viewed;
+		}
 
 		public void AnswerCorrect()
 		{

@@ -87,6 +87,7 @@ namespace WordMaster
         public void ResetProgress()
         {
 			Words.ForEach(w => w.Ratio = 0);
+			Statistics.ResetTime();
         }
 
 		private Word FindWordWithWorstRatio(float probability)

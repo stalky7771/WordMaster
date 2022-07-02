@@ -8,6 +8,7 @@ public class WordCheckingView : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _textTranslation;
 	[SerializeField] private TextMeshProUGUI _textMasked;
 	[SerializeField] private TextMeshProUGUI _textExample;
+	[SerializeField] private TextMeshProUGUI _textType;
 	[SerializeField] private TMP_InputField _inputField;
 
 	[SerializeField] private GameObject _checkPanel;
@@ -17,22 +18,7 @@ public class WordCheckingView : MonoBehaviour
 
 	private DictionaryManager DictManager => Context.DictionaryManager;
 
-	public string Translation
-	{
-		set => _textTranslation.text = value;
-	}
-
-	public string Masked
-	{
-		set => _textMasked.text = value;
-	}
-
-	public string Example
-	{
-		set => _textExample.text = value;
-	}
-
-	private void Start()
+    private void Start()
 	{
 		DictManager.OnUpdateUi += OnUpdateUI;
 		DictManager.OnSetNewWord += OnSetNewWord;
@@ -130,20 +116,28 @@ public class WordCheckingView : MonoBehaviour
 	}
 
 	private void OnUpdateUI()
-	{
-		Translation = DictManager.CurrentWord.Translation;
-		Masked = DictManager.Masked;
-		Example = DictManager.CurrentWord.DescriptionWithCensure;
-		_wordProgressView.Progress = DictManager.CurrentWord.Ratio;
+    {
+        UpdateData(DictManager.CurrentWord);
+
+        _textMasked.text = DictManager.Masked;
 	}
 
 	private void OnSetNewWord(Word word)
 	{
 		_inputField.text = string.Empty;
-		Translation = word.Translation;
-		Example = word.DescriptionWithCensure;
-		Masked = DictManager.Masked;
-		_wordProgressView.Progress = DictManager.CurrentWord.Ratio;
+       UpdateData(word);
+       _textMasked.text = DictManager.Masked;
+	}
+
+    private void UpdateData(Word word)
+    {
+		if (word == null)
+			return;
+
+        _textTranslation.text = word.Translation;
+        _textExample.text = word.ExampleForView;
+        _textType.text = string.IsNullOrEmpty(word.Type) ? string.Empty : word.Type.ToUpper();
+        _wordProgressView.Progress = word.Ratio;
 	}
 
 	private void OnPrintDictionary(Dictionary dictionary)
